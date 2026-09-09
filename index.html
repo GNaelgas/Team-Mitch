@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Mitch Cheat Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#4a6984;
+    --accent-2:#6f92ac;
+    --accent-soft:#dde7ee;
+    --bg:#f8f9fa;
+    --panel:#ffffff;
+    --text:#0a192f;
+    --muted:#55697d;
+    --border:#dfe5eb;
+    --hover:#eef2f6;
+    --danger:#b3402f;
+    --danger-bg:#fbeeec;
+    --warn:#a8731f;
+    --warn-bg:#faf1e2;
+    --ok:#2e7d5b;
+    --ok-bg:#eaf5ef;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(10,25,47,.04), 0 8px 24px -12px rgba(10,25,47,.12);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4,.display{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.01em;}
+  code,.mono,.copyable,.phone-chip,.mail-chip,table td.mono-cell{font-family:'IBM Plex Mono',monospace;}
+  a{color:var(--accent);}
+
+  /* ---------- Layout ---------- */
+  .app{display:grid;grid-template-columns:272px 1fr;min-height:100vh;}
+
+  .sidebar{
+    background:linear-gradient(180deg,#0a192f 0%,#132b45 100%);
+    color:#dfe8f0;
+    padding:26px 18px 18px;
+    position:sticky;top:0;height:100vh;overflow-y:auto;
+  }
+  .brand{
+    display:flex;align-items:center;gap:10px;
+    padding:4px 6px 22px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    margin-bottom:18px;
+  }
+  .brand svg{flex:none;}
+  .brand-text{display:flex;flex-direction:column;line-height:1.15;}
+  .brand-title{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16.5px;
+    background:linear-gradient(100deg,#ffffff 0%, #b9cfe0 35%, #ffffff 55%, #7093ad 75%, #ffffff 100%);
+    background-size:250% auto;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:chrome-sweep 7s linear infinite;
+  }
+  @keyframes chrome-sweep{
+    0%{background-position:0% center;}
+    100%{background-position:250% center;}
+  }
+  .brand-sub{font-size:11px;color:#8fa7bc;letter-spacing:.04em;text-transform:uppercase;margin-top:2px;}
+
+  .nav-group{margin-bottom:6px;}
+  .nav-group-label{
+    font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;
+    color:#6d8398;padding:14px 10px 6px;font-weight:600;
+  }
+  .nav-item{
+    display:flex;align-items:center;gap:10px;
+    padding:9px 10px;border-radius:10px;
+    color:#c6d5e2;text-decoration:none;font-size:13.5px;font-weight:500;
+    cursor:pointer;border:1px solid transparent;
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .nav-item svg{flex:none;opacity:.85;}
+  .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
+  .nav-item.active{
+    background:rgba(74,105,132,.35);
+    color:#fff;
+    border-color:rgba(255,255,255,.12);
+    position:relative;
+  }
+  .nav-item.active::before{
+    content:"";position:absolute;left:-1px;top:8px;bottom:8px;width:3px;border-radius:3px;
+    background:linear-gradient(180deg,#9fc1d9,#4a6984);
+  }
+
+  .main{padding:34px 42px 60px;max-width:1180px;}
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:28px;flex-wrap:wrap;gap:14px;
+  }
+  .search-wrap{position:relative;}
+  .search-wrap input{
+    width:280px;padding:10px 14px 10px 38px;border-radius:10px;
+    border:1px solid var(--border);background:var(--panel);
+    font-family:'Inter',sans-serif;font-size:13.5px;color:var(--text);
+    box-shadow:var(--shadow);
+  }
+  .search-wrap input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);}
+
+  .page{display:none;animation:fadein .25s ease;}
+  .page.active{display:block;}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+
+  .page-head{margin-bottom:26px;}
+  .page-eyebrow{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:600;margin-bottom:6px;}
+  .page-title{font-size:26px;font-weight:700;margin:0 0 6px;}
+  .page-desc{color:var(--muted);font-size:14.5px;max-width:640px;}
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+    box-shadow:var(--shadow);margin-bottom:22px;overflow:hidden;
+  }
+  .card-head{
+    display:flex;align-items:center;gap:10px;
+    padding:15px 20px;border-bottom:1px solid var(--border);
+    background:linear-gradient(90deg,var(--accent) 0%, #5c7c98 100%);
+    color:#fff;
+  }
+  .card-head.neutral{background:#0a192f;}
+  .card-head.danger{background:linear-gradient(90deg,#a8402d,#c25a3c);}
+  .card-head.warn{background:linear-gradient(90deg,#9c6c1f,#bb8a34);}
+  .card-head.ok{background:linear-gradient(90deg,#276b4f,#358a68);}
+  .card-head svg{flex:none;}
+  .card-head h3{margin:0;font-size:14.5px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;}
+  .card-body{padding:20px;}
+  .card-note{
+    font-size:12.5px;color:var(--muted);padding:12px 20px;border-top:1px solid var(--border);
+    font-style:italic;background:#fbfcfd;
+  }
+
+  .banner{
+    display:flex;gap:10px;align-items:flex-start;
+    padding:12px 14px;border-radius:10px;font-size:13.5px;margin-bottom:16px;
+  }
+  .banner svg{flex:none;margin-top:1px;}
+  .banner.info{background:var(--accent-soft);color:#254257;}
+  .banner.warn{background:var(--warn-bg);color:#7a541a;}
+  .banner.danger{background:var(--danger-bg);color:#7d2c1e;}
+  .banner.ok{background:var(--ok-bg);color:#1f5c42;}
+  .banner strong{font-weight:700;}
+
+  /* ---------- Tables ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  thead th{
+    text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--muted);font-weight:600;padding:0 12px 10px;border-bottom:1px solid var(--border);
+  }
+  tbody td{padding:11px 12px;border-bottom:1px solid #eef1f4;vertical-align:middle;}
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#fafbfc;}
+  td.label-cell{font-weight:600;}
+  .em-dash{color:#b6bfc8;}
+
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--accent-soft);color:#264257;
+    padding:5px 10px;border-radius:7px;font-size:12.5px;font-weight:500;
+    border:none;cursor:pointer;transition:background .15s ease;
+  }
+  .chip:hover{background:#c9d9e5;}
+  .chip svg{width:12px;height:12px;flex:none;}
+  .link-chip{color:var(--accent);text-decoration:underline;font-size:13px;}
+
+  /* ---------- Template blocks ---------- */
+  .tmpl{
+    border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:4px;
+  }
+  .tmpl-head{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:9px 14px;background:#f3f5f7;border-bottom:1px solid var(--border);
+  }
+  .tmpl-head span{font-size:11.5px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  .copy-btn{
+    display:flex;align-items:center;gap:6px;
+    background:var(--text);color:#fff;border:none;padding:7px 12px;border-radius:8px;
+    font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .copy-btn:hover{background:#182c47;}
+  .copy-btn:active{transform:scale(.97);}
+  .copy-btn.copied{background:var(--ok);}
+  .copy-btn svg{width:13px;height:13px;flex:none;}
+  .tmpl-body{
+    padding:16px 18px;font-size:13px;color:#22364b;white-space:pre-wrap;
+    background:#fff;max-height:340px;overflow-y:auto;
+  }
+  .tmpl-subject{
+    padding:10px 18px;background:#f9fafb;border-bottom:1px dashed var(--border);
+    font-size:12.5px;color:var(--muted);
+  }
+  .tmpl-subject b{color:var(--text);}
+
+  .field-list{display:flex;flex-direction:column;gap:6px;margin-top:8px;}
+  .field-list li{list-style:none;}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:920px){.two-col{grid-template-columns:1fr;}}
+
+  .step-list{counter-reset:step;margin:0;padding:0;list-style:none;}
+  .step-list li{
+    position:relative;padding:0 0 16px 34px;counter-increment:step;
+  }
+  .step-list li:last-child{padding-bottom:0;}
+  .step-list li::before{
+    content:counter(step);
+    position:absolute;left:0;top:0;width:22px;height:22px;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:11.5px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;
+  }
+  .step-list li:not(:last-child)::after{
+    content:"";position:absolute;left:11px;top:22px;bottom:0;width:1px;background:var(--border);
+  }
+  .step-title{font-weight:600;margin-bottom:2px;}
+  .step-desc{color:var(--muted);font-size:13px;}
+
+  .subtle-warn{
+    display:inline-block;background:var(--danger-bg);color:var(--danger);
+    padding:3px 8px;border-radius:5px;font-size:11.5px;font-weight:600;margin-top:4px;
+  }
+
+  .grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
+  .mini-card{
+    border:1px solid var(--border);border-radius:11px;padding:15px;background:#fff;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .mini-card:hover{border-color:var(--accent-2);transform:translateY(-2px);}
+  .mini-card .tag{
+    font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:700;
+    padding:2px 7px;border-radius:5px;display:inline-block;margin-bottom:8px;
+  }
+  .tag.payment{background:#eaf5ef;color:var(--ok);}
+  .tag.invoicing{background:var(--accent-soft);color:var(--accent);}
+  .tag.feature{background:#f1eafa;color:#6a3fae;}
+  .tag.notice{background:var(--danger-bg);color:var(--danger);}
+  .mini-card h4{margin:0 0 6px;font-size:14.5px;}
+  .mini-card p{margin:0;font-size:13px;color:var(--muted);}
+  .mini-card .date{font-size:11.5px;color:#9aa8b6;margin-top:8px;}
+
+  /* Resource / download list */
+  .res-list{display:flex;flex-direction:column;}
+  .res-item{
+    display:flex;align-items:center;gap:12px;padding:12px 4px;
+    border-bottom:1px solid #eef1f4;
+  }
+  .res-item:last-child{border-bottom:none;}
+  .res-icon{
+    width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;flex:none;
+  }
+  .res-info{flex:1;min-width:0;}
+  .res-info strong{display:block;font-size:13.5px;font-weight:600;}
+  .res-info span{font-size:12px;color:var(--muted);}
+  .dl-btn{
+    display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:8px;
+    background:var(--accent-soft);color:var(--accent);text-decoration:none;font-size:12.5px;font-weight:600;
+    transition:background .15s ease;flex:none;
+  }
+  .dl-btn:hover{background:#c9d9e5;}
+  .dl-btn svg{width:13px;height:13px;}
+
+  .toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--text);color:#fff;padding:11px 20px;border-radius:10px;
+    font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;
+    opacity:0;pointer-events:none;transition:opacity .2s ease, transform .2s ease;
+    box-shadow:0 10px 30px rgba(10,25,47,.25);z-index:999;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .home-hero{
+    background:linear-gradient(120deg,#0a192f 0%,#16324d 55%, #4a6984 130%);
+    border-radius:18px;padding:38px 34px;color:#fff;position:relative;overflow:hidden;margin-bottom:26px;
+  }
+  .home-hero::after{
+    content:"";position:absolute;inset:0;
+    background:radial-gradient(600px 200px at 85% 0%, rgba(255,255,255,.12), transparent 60%);
+  }
+  .home-hero h1{font-size:30px;margin:0 0 10px;position:relative;}
+  .home-hero p{color:#c7d6e3;max-width:520px;font-size:14.5px;position:relative;margin:0;}
+  .home-hero .hero-tag{
+    display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    background:rgba(255,255,255,.12);padding:5px 10px;border-radius:20px;margin-bottom:14px;position:relative;
+  }
+
+  .quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:6px;}
+  .quick-card{
+    background:#fff;border:1px solid var(--border);border-radius:13px;padding:18px;
+    cursor:pointer;transition:border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .quick-card:hover{border-color:var(--accent-2);transform:translateY(-3px);box-shadow:var(--shadow);}
+  .quick-icon{
+    width:38px;height:38px;border-radius:10px;background:var(--accent-soft);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .quick-card h4{margin:0;font-size:14.5px;}
+  .quick-card p{margin:0;font-size:12.5px;color:var(--muted);}
+
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-thumb{background:#c7d1da;border-radius:6px;}
+  ::-webkit-scrollbar-track{background:transparent;}
+
+  @media (prefers-reduced-motion: reduce){
+    .brand-title{animation:none;}
+    .page{animation:none;}
+  }
+
+  @media (max-width:880px){
+    .app{grid-template-columns:1fr;}
+    .sidebar{position:relative;height:auto;}
+    .main{padding:24px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><rect x="1" y="1" width="22" height="22" rx="6" fill="#4a6984"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="brand-text">
+        <span class="brand-title">TEAM MITCH</span>
+        <span class="brand-sub">Cheat Sheet</span>
+      </div>
+    </div>
+
+    <nav id="navList">
+      <div class="nav-group">
+        <div class="nav-item active" data-page="home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+          Home
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Call Routing</div>
+        <div class="nav-item" data-page="routing">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2z"/></svg>
+          Transfers &amp; Escalation
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Account Lifecycle</div>
+        <div class="nav-item" data-page="cancellation">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+          Cancellation &amp; Suspension
+        </div>
+        <div class="nav-item" data-page="billing">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          Billing &amp; Payments
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Correspondence</div>
+        <div class="nav-item" data-page="templates">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+          Email Templates
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Stay Informed</div>
+        <div class="nav-item" data-page="announcements">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l6 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg>
+          Announcements &amp; Alerts
+        </div>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-label">Learning</div>
+        <div class="nav-item" data-page="training">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9M12 12L2.5 6.5 12 3l9.5 3.5L12 12z"/><path d="M6 9.5v6c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-6"/></svg>
+          Training &amp; Resources
+        </div>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="main">
+    <div class="topbar">
+      <div class="search-wrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input id="searchInput" type="text" placeholder="Search cheat sheet...">
+      </div>
+    </div>
+
+    <!-- ============ HOME ============ -->
+    <section class="page active" id="home">
+      <div class="home-hero">
+        <span class="hero-tag">Team Mitch · Internal Use</span>
+        <h1>Everything Team Mitch needs, one click away.</h1>
+        <p>Transfer numbers, escalation emails, cancellation and suspension steps, billing policy, and ready-to-copy templates — organized so new hires and tenured agents can find the right answer fast.</p>
+      </div>
+
+      <h3 style="margin:0 0 12px;font-size:15px;">Jump to a section</h3>
+      <div class="quick-grid">
+        <div class="quick-card" data-goto="routing">
+          <div class="quick-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2z"/></svg></div>
+          <h4>Transfers &amp; Escalation</h4>
+          <p>Toll-free lines, escalation inboxes, and inbound call routing.</p>
+        </div>
+        <div class="quick-card" data-goto="cancellation">
+          <div class="quick-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg></div>
+          <h4>Cancellation &amp; Suspension</h4>
+          <p>Step-by-step process plus copyable request templates.</p>
+        </div>
+        <div class="quick-card" data-goto="billing">
+          <div class="quick-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+          <h4>Billing &amp; Payments</h4>
+          <p>Refund policy, ownership changes, and payment trace process.</p>
+        </div>
+        <div class="quick-card" data-goto="templates">
+          <div class="quick-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg></div>
+          <h4>Email Templates</h4>
+          <p>Ready responses for common billing and ownership questions.</p>
+        </div>
+        <div class="quick-card" data-goto="announcements">
+          <div class="quick-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l6 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg></div>
+          <h4>Announcements &amp; Alerts</h4>
+          <p>Recent changes, security notices, and internal memos.</p>
+        </div>
+        <div class="quick-card" data-goto="training">
+          <div class="quick-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9M12 12L2.5 6.5 12 3l9.5 3.5L12 12z"/><path d="M6 9.5v6c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-6"/></svg></div>
+          <h4>Training &amp; Resources</h4>
+          <p>Onboarding files, software installers, and reference guides.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ROUTING ============ -->
+    <section class="page" id="routing">
+      <div class="page-head">
+        <div class="page-eyebrow">Call Routing</div>
+        <h1 class="page-title">Transfers &amp; Email Escalation</h1>
+        <p class="page-desc">Where to send a request, by department — click any number or address to copy it.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2z"/></svg>
+          <h3>Request Transfer &amp; Email Escalation</h3>
+        </div>
+        <div class="card-body">
+          <table>
+            <thead><tr><th>Request Type</th><th>Toll Free Number</th><th>Email Escalation</th></tr></thead>
+            <tbody>
+              <tr><td class="label-cell">Sales</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-833-745-5311')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-833-745-5311</button></td><td><button class="chip" onclick="copyText(this,'forms@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>forms@apialarm.com</button></td></tr>
+              <tr><td class="label-cell">Upgrade</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-833-745-5732')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-833-745-5732</button></td><td class="em-dash">&mdash;</td></tr>
+              <tr><td class="label-cell">Retention / Cancellation / Rate Reduction</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-833-745-5314')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-833-745-5314</button></td><td><button class="chip" onclick="copyText(this,'apiwelcomesyou@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>apiwelcomesyou@apialarm.com</button></td></tr>
+              <tr><td class="label-cell">Technical Support</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-833-745-5253')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-833-745-5253</button></td><td><button class="chip" onclick="copyText(this,'service@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>service@apialarm.com</button></td></tr>
+              <tr><td class="label-cell">Customer Care</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-833-745-5153')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-833-745-5153</button></td><td><button class="chip" onclick="copyText(this,'customerservice@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>customerservice@apialarm.com</button></td></tr>
+              <tr><td class="label-cell">Billing</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-833-745-5130')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-833-745-5130</button></td><td><button class="chip" onclick="copyText(this,'apireceivables@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>apireceivables@apialarm.com</button></td></tr>
+              <tr><td class="label-cell">Monitoring Station</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-800-268-6870')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-800-268-6870</button></td><td class="em-dash">&mdash;</td></tr>
+              <tr><td class="label-cell">French Customer Service</td><td class="mono-cell">ext. <b>3500</b></td><td class="em-dash">&mdash;</td></tr>
+              <tr><td class="label-cell">French &amp; Quebec Retention / Sales</td><td class="mono-cell">ext. <b>2588</b></td><td class="em-dash">&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head neutral">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2z"/></svg>
+          <h3>Inbound Call Routing — Branches</h3>
+        </div>
+        <div class="card-body">
+          <table>
+            <thead><tr><th>Branch</th><th>Transfer To</th><th>Ext</th></tr></thead>
+            <tbody>
+              <tr><td class="label-cell">Live Patrol</td><td>Candace</td><td class="mono-cell">2541</td></tr>
+              <tr><td class="label-cell">Dealer</td><td>Marion</td><td class="mono-cell">2264</td></tr>
+              <tr><td class="label-cell">National / Toronto</td><td>Tameika, Buddoo</td><td class="mono-cell">2255</td></tr>
+              <tr><td class="label-cell">Trent and Ranguard</td><td>Hamza</td><td class="mono-cell">2624</td></tr>
+              <tr><td class="label-cell">Winnipeg</td><td>Ruchi Patel</td><td class="mono-cell">2291</td></tr>
+              <tr><td class="label-cell">BOB / Bill on Behalf</td><td>Sue Boodooosingh</td><td class="mono-cell">2235</td></tr>
+              <tr><td class="label-cell">Ensign / Vigil</td><td>Gil</td><td class="mono-cell">2621</td></tr>
+              <tr><td class="label-cell">Fluent Canada</td><td>Message Bell GC first</td><td class="em-dash">&mdash;</td></tr>
+              <tr><td class="label-cell">Fluent US</td><td>Message Bell GC first</td><td class="em-dash">&mdash;</td></tr>
+              <tr><td class="label-cell">French Customer Service</td><td>—</td><td class="mono-cell">3500</td></tr>
+              <tr><td class="label-cell">French &amp; Quebec Retention / Sales</td><td>—</td><td class="mono-cell">2588</td></tr>
+              <tr><td class="label-cell">Guard Response Fee Removal</td><td class="mono-cell"><button class="chip" onclick="copyText(this,'1-833-745-5632')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>1-833-745-5632</button></td><td class="em-dash">&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head ok">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+          <h3>Team Update — API Account Escalations</h3>
+        </div>
+        <div class="card-body">
+          <div class="banner danger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a1.5 1.5 0 0 0 1.3 2.2h17.8a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+            <span>All API master-account issues must be transferred to <strong>Tameika (ext. 2255)</strong>.</span>
+          </div>
+          <p style="margin:0 0 8px;font-size:13.5px;color:var(--muted);">Before transferring, ask the necessary questions to fully understand the customer's concern — this ensures accurate information and prevents unnecessary transfers:</p>
+          <ul style="margin:0;padding-left:20px;font-size:13.5px;color:var(--text);">
+            <li>Gather all relevant details first</li>
+            <li>Verify the customer's concern</li>
+            <li>Then warm transfer the call to Tameika if it is API-related</li>
+          </ul>
+        </div>
+        <div class="card-note">— Mitch Gutierrez, API VH Collections Manager (July 2026)</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 8h16"/></svg>
+          <h3>New French &amp; Quebec Retention / Sales Call Queue</h3>
+        </div>
+        <div class="card-body">
+          <p style="margin:0 0 12px;font-size:13.5px;">A dedicated queue for French-speaking customers and customers located in Quebec, for retention and sales inquiries.</p>
+          <table>
+            <tbody>
+              <tr><td class="label-cell">Queue Extension</td><td class="mono-cell">2588</td></tr>
+              <tr><td class="label-cell">Hours of Operation</td><td>Monday to Friday, 9:00 a.m. – 5:00 p.m. ET</td></tr>
+              <tr><td class="label-cell">After Hours</td><td>Inform customer to call back the next business day during operating hours.</td></tr>
+              <tr><td class="label-cell">Email — Retention</td><td><button class="chip" onclick="copyText(this,'apiwelcomesyou@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>apiwelcomesyou@apialarm.com</button></td></tr>
+              <tr><td class="label-cell">Email — Sales</td><td><button class="chip" onclick="copyText(this,'forms@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>forms@apialarm.com</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head ok">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c-4-3-8-6.5-8-11a8 8 0 0 1 16 0c0 4.5-4 8-8 11z"/><path d="M12 8v6M9 11h6"/></svg>
+          <h3>Announcement — Go Green Email Invoicing Promo</h3>
+        </div>
+        <div class="card-body">
+          <div class="banner ok">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c-4-3-8-6.5-8-11a8 8 0 0 1 16 0c0 4.5-4 8-8 11z"/><path d="M12 8v6M9 11h6"/></svg>
+            <span><strong>Let's grow greener together!</strong> Customers switching to email invoicing receive <strong>$10.00 off</strong> their next invoice. Ready to switch: email <strong>customercare@apialarm.com</strong> with account number or full address.</span>
+          </div>
+          <p style="margin:0 0 12px;font-size:13.5px;">If we get a call in regards to this, we can either transfer to customer service or send an email to credit at <button class="chip" onclick="copyText(this,'apireceivables@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>apireceivables@apialarm.com</button>.</p>
+          <p style="margin:0 0 8px;font-size:13.5px;">Follow the subject line — ensure the standard subject line is added: sedona stages group code, with the header before the sedona account is to be <strong>GO GREEN 10.00 OFF</strong>.</p>
+          <div class="tmpl">
+            <div class="tmpl-head"><span>Subject Line</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-go-green-subject')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-go-green-subject">GO GREEN 10.00 OFF - [Account Number] / [Name on the Account] / [Old Customer #] / [Group Code]</div>
+          </div>
+        </div>
+        <div class="card-note">— Mitch, 9:43 AM</div>
+      </div>
+    </section>
+
+    <!-- ============ CANCELLATION & SUSPENSION ============ -->
+    <section class="page" id="cancellation">
+      <div class="page-head">
+        <div class="page-eyebrow">Account Lifecycle</div>
+        <h1 class="page-title">Cancellation &amp; Suspension</h1>
+        <p class="page-desc">Process steps and copy-ready templates for suspension and cancellation requests.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          <h3>Suspension Process</h3>
+        </div>
+        <div class="card-body">
+          <div class="banner warn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 7v5l3 3"/></svg>
+            <span>Set expectation: <strong>72-business hour turnaround</strong> for a response.</span>
+          </div>
+          <div class="two-col">
+            <div>
+              <h4 style="font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 12px;">Customer sends email request</h4>
+              <ul class="step-list">
+                <li><div class="step-title">Forward the request</div><div class="step-desc">To customerservice@apialarm.com &mdash; French customers go to servicequebec@apialarm.com</div></li>
+                <li><div class="step-title">Set the subject line</div><div class="step-desc">Suspension Request // Sedona # // Stages/SIMS # // Group Code<br><span class="subtle-warn">If details unknown — confirm with customer first</span></div></li>
+                <li><div class="step-title">Write the email body</div><div class="step-desc">Greeting to internal team + customer requesting suspension of services</div></li>
+                <li><div class="step-title">Log it</div><div class="step-desc">Copy/paste the email into Sedona notes and add a note that the customer called in to suspend</div></li>
+              </ul>
+            </div>
+            <div>
+              <h4 style="font-size:12.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:0 0 12px;">Customer calls requesting suspension</h4>
+              <ul class="step-list">
+                <li><div class="step-title">Direct them to email</div><div class="step-desc">customerservice@apialarm.com &mdash; French customers to servicequebec@apialarm.com</div></li>
+                <li><div class="step-title">Provide the account number</div><div class="step-desc">Give the customer their Sedona account number to include in their request</div></li>
+                <li><div class="step-title">Log it</div><div class="step-desc">Add notes in Sedona confirming the customer called in to suspend services</div></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-note">— Created by Rhonda Petrash, Sales Manager (Mar 18, 2026)</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head danger">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>
+          <h3>Cancellation Request — Internal Email Template</h3>
+        </div>
+        <div class="card-body">
+          <div class="banner danger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+            <span>Send to: <strong>apiwelcomesyou@apialarm.com</strong></span>
+          </div>
+          <div class="tmpl">
+            <div class="tmpl-subject"><b>Subject:</b> [Customer Number] · [Customer Name] · [System Number / Old Customer #] · [Group Code]</div>
+            <div class="tmpl-head"><span>Email Body</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-cancel-internal')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-cancel-internal">Account Number: ____________
+Name: ____________
+Email: ____________
+Address: ____________
+Phone: ____________
+
+Reason for Cancellation: ____________</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+          <h3>Request for Cancellation — Customer-Facing Template</h3>
+        </div>
+        <div class="card-body">
+          <div class="tmpl">
+            <div class="tmpl-head"><span>Email Body</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-cancel-customer')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-cancel-customer">Hi [customer]
+
+Thank you for contacting API. We certainly do not want to see you go, and we'd love to find a solution that better suits your needs.
+
+For prompt assistance, you can reach our Retention Team at 1-833-745-5314, Monday to Friday between 9:00 AM and 5:00 PM EST.
+
+Alternatively, to send your written cancellation request, please follow this steps:
+
+1. Send an email to our Cancellation Team at apiwelcomesyou@apialarm.com.
+2. In your email, include the following details:
+
+* Account Number:
+* Name on the Account:
+* Call-Back Number:
+* Email Address:
+* Home/Site Address:
+* Reason for Cancellation:
+
+Feel free to copy this subject line to your email: Cancellation Request - [account number] / [account holder name] / [system number] / [group code]
+
+Thank you for your patience and understanding.
+
+Warm regards,</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="M22 4L12 14.01l-3-3"/></svg>
+          <h3>Cancellation Request Receipt — Template</h3>
+        </div>
+        <div class="card-body">
+          <div class="tmpl">
+            <div class="tmpl-head"><span>Email Body</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-cancel-receipt')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-cancel-receipt">Hello,
+
+We have received your cancellation request. A team member from our Loyalty team will be in touch with you to assist.
+
+We certainly do not want to see you go, and we'd love to find a solution that better suits your needs.
+
+For prompt assistance, you can reach our Retention Team at 1-833-745-5314, Monday to Friday between 10:00 AM and 5:00 PM EST.
+
+Thank you for your patience and understanding.
+
+Warm regards,</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BILLING & PAYMENTS ============ -->
+    <section class="page" id="billing">
+      <div class="page-head">
+        <div class="page-eyebrow">Account Lifecycle</div>
+        <h1 class="page-title">Billing &amp; Payments</h1>
+        <p class="page-desc">Refunds, ownership changes, payment tracing, and card-on-file policy.</p>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21a8 8 0 1 0-16 0"/><circle cx="12" cy="8" r="5"/></svg>
+            <h3>Customer Ownership / Name &amp; Address</h3>
+          </div>
+          <div class="card-body">
+            <div class="banner info">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span>You are only authorized to update <strong>billing address, phone, and email address</strong> in Sedona.</span>
+            </div>
+            <table>
+              <tbody>
+                <tr><td class="label-cell">Ownership / Name Changes</td><td>Email <button class="chip" onclick="copyText(this,'forms@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>forms@apialarm.com</button> — include account number + requested change in subject line.<br><span class="subtle-warn">Do NOT give this email to customers</span></td></tr>
+                <tr><td class="label-cell">Address Changes</td><td>Email forms@apialarm.com — handled by Sales team</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-note">— Thiranga Perera, Director of Finance (Feb 25, 2026)</div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+            <h3>Refund Policy — What To Tell Customers</h3>
+          </div>
+          <div class="card-body">
+            <div class="banner info">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+              <span><strong>No refunds on active accounts.</strong> Overpayment stays as a credit applied to future invoices.</span>
+            </div>
+            <table>
+              <tbody>
+                <tr><td class="label-cell">Overpayment / Credit</td><td>Credit remains on account and is automatically applied to the next billing cycle before charging the card.</td></tr>
+                <tr><td class="label-cell">Example</td><td>$55 credit on a $25/mo account → next 2 invoices covered; card only charged again after credit is used up.</td></tr>
+                <tr><td class="label-cell">Refunds</td><td>Only considered when the account is <strong>cancelled</strong>, no pending billings, and no outstanding invoices.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-note">— Thiranga Perera, Director of Finance</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head danger">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><path d="M7 23l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+          <h3>Payment Trace &amp; Apply Request — New Process (Effective Apr 30, 2026)</h3>
+        </div>
+        <div class="card-body">
+          <div class="banner danger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a1.5 1.5 0 0 0 1.3 2.2h17.8a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+            <span>Do NOT email or copy Shailesh or Jeffrey directly regarding cash application adjustments or follow-ups. Use the process below. <strong>One email per request only</strong> — do not send multiple emails or copy Jeffrey, Shailesh, or Parmjit.</span>
+          </div>
+          <ul class="step-list">
+            <li><div class="step-title">Submit requests via email</div><div class="step-desc">Send all requests to <button class="chip" onclick="copyText(this,'APIreceivables@apialarm.com')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>APIreceivables@apialarm.com</button></div></li>
+            <li><div class="step-title">Use the exact subject line</div><div class="step-desc">Emails without it will not be addressed in a timely manner.
+              <div class="tmpl" style="margin-top:8px;">
+                <div class="tmpl-head"><span>Subject Line</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-payment-subject')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+                <div class="tmpl-body" id="tmpl-payment-subject">COLLECTIONS TEAM - **CASH APPLICATION** - [Customer Number/Name]</div>
+              </div>
+            </div></li>
+            <li><div class="step-title">Include a clear description</div><div class="step-desc">Do not just forward the customer email. Briefly outline the required action and attach supporting documentation.</div></li>
+            <li><div class="step-title">One email per request only</div></li>
+            <li><div class="step-title">Escalation</div><div class="step-desc">If not resolved within 2 business days, forward the original email to <strong>Parmjit Parmer</strong> and copy <strong>Mamoon Ashraf</strong>.</div></li>
+          </ul>
+
+          <h4 style="margin:22px 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);">Common Request Types &amp; Templates</h4>
+          <div class="tmpl" style="margin-bottom:14px;">
+            <div class="tmpl-head"><span>Payment made, not applied to account</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-pay-1')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-pay-1">Hi Team,
+
+A payment was made by the customer below but has not yet been applied to their account. Could you help me trace and apply it?
+
+Customer Number: [insert]
+Payment Date: [insert]
+Payment Amount: [insert]
+Payment Method: [insert]
+
+Proof of payment is attached (customer remittance / direct deposit confirmation).
+
+Please let me know once this has been applied or if you need anything further.
+
+Thank you for your assistance.
+
+Best regards,</div>
+          </div>
+          <div class="tmpl" style="margin-bottom:14px;">
+            <div class="tmpl-head"><span>Payment applied to incorrect customer account</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-pay-2')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-pay-2">Hi Team,
+
+A payment appears to have been applied to the wrong customer account. Could you please move it to the correct account?
+
+Payment currently applied to: [incorrect customer number/name]
+Should be applied to: [correct customer number/name]
+Payment Date: [insert]
+Payment Amount: [insert]
+
+Proof of payment is attached. Please confirm once the correction has been made.
+
+Thank you for your assistance.
+
+Best regards,</div>
+          </div>
+          <div class="tmpl">
+            <div class="tmpl-head"><span>Payment applied to correct customer, incorrect invoice</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-pay-3')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-pay-3">Hi Team,
+
+A payment was applied to the correct customer account but to the wrong invoice. Could you please move it to the correct invoice?
+
+Customer Number: [insert]
+Currently applied to invoice #: [insert]
+Should be applied to invoice #: [insert]
+Payment Date: [insert]
+Payment Amount: [insert]
+
+Supporting documentation is attached. Please confirm once the invoice has been corrected.
+
+Thank you for your assistance.
+
+Best regards,</div>
+          </div>
+        </div>
+        <div class="card-note">— Prepared by Thiranga Perera (Apr 30, 2026)</div>
+      </div>
+
+      <div class="card">
+        <div class="card-head warn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+          <h3>Cards-on-File — Billing Update</h3>
+        </div>
+        <div class="card-body">
+          <p style="margin:0 0 12px;font-size:13.5px;">Good Morning Everyone — this is to update that will effect, that we are now getting new cards automatically to the system.</p>
+          <div class="banner info">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>Check off all invoices (recurring, service, etc.) so we can charge for everything on file vs. just the recurring.</span>
+          </div>
+          <div class="banner danger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a1.5 1.5 0 0 0 1.3 2.2h17.8a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+            <span><strong>Please do not do this for any customer in Quebec</strong> — written authorization is required. If this goes through, it will be API collected; keep an eye on Quebec, as laws there require permission first.</span>
+          </div>
+        </div>
+        <div class="card-note">— Mamoon Ashraf, Accounts Receivable Manager (Jul 29, 2026)</div>
+      </div>
+    </section>
+
+    <!-- ============ EMAIL TEMPLATES ============ -->
+    <section class="page" id="templates">
+      <div class="page-head">
+        <div class="page-eyebrow">Correspondence</div>
+        <h1 class="page-title">Basic Email Templates</h1>
+        <p class="page-desc">Ready-to-copy responses for the most common billing and ownership questions.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+          <h3>Claiming They Were Billed in Error (No New Agreement Signed)</h3>
+        </div>
+        <div class="card-body">
+          <div class="tmpl">
+            <div class="tmpl-head"><span>Email Body</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-error-1')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-error-1">Hi [customer name],
+
+Thank you for reaching out, and I understand the concern — receiving unexpected billing without a clear explanation is confusing, and I'm happy to clarify.
+
+You have not been billed in error. Your account with us stems from a business transition rather than a new agreement you would have signed with a.p.i. Alarm directly. Effective October 1, 2025, a.p.i. Alarm Inc. acquired Bell's Security & Automation business (formerly AlarmForce), and all active Bell Security and Automation accounts — including yours — were transferred to us as part of that acquisition. This transition was announced publicly by Bell, and you can review the official details here: https://business.bell.ca/Support/small-business/security-automation/bell_business_security_and_automation_update
+
+As part of this transition, no new contract or signature was required from you. Your existing service term simply carried over from Bell to a.p.i. Alarm on the same conditions, which is why our records show your account without a separately signed a.p.i. Alarm agreement.
+
+I've attached our welcome letter along with a copy of the contract term information from your Bell file for your review.
+
+Please don't hesitate to reach out if you have further questions or would like to go over your account details together — I'm happy to help.
+
+Warm regards,</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+          <h3>Cancelled Account — Asking Why Still Being Billed</h3>
+        </div>
+        <div class="card-body">
+          <div class="tmpl">
+            <div class="tmpl-head"><span>Email Body</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-error-2')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-error-2">Hi [Customer Name],
+
+Thank you so much for reaching out, and I completely understand wanting some clarity on this balance — I'm glad to walk you through it.
+
+The amount on your account reflects your final invoice, which covers the remaining months of the contract term that was originally carried over from Bell. The payment of $xx you kindly made last xx was applied to the outstanding balance while your account was still active, prior to your cancellation request. The final invoice you'll find attached reflects the charges for the remaining contracted months that followed.
+
+I've attached a copy of the final invoice for your records, and I want to make sure everything makes sense on your end.
+
+If anything is unclear or you'd like to go over the details together, please don't hesitate to reach out — I'm happy to help in any way I can.
+
+Warm regards,</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 4l8 8 8-8"/></svg>
+          <h3>Outstanding Invoice From Cancelled Account (Not Final Invoice)</h3>
+        </div>
+        <div class="card-body">
+          <div class="tmpl">
+            <div class="tmpl-head"><span>Email Body</span><button class="copy-btn" onclick="copyTemplate(this,'tmpl-error-3')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>Copy</button></div>
+            <div class="tmpl-body" id="tmpl-error-3">Hi [Customer Name],
+
+Thank you for reaching out, and I sincerely apologize for the frustration this has caused. That's not the experience we want for you.
+
+I can confirm your account (account number) has been cancelled since [month and year]. The remaining balance on file reflects charges from prior to your cancellation request, not any charges since.
+
+If you need further clarification on your processed termination of account, you can reach our retention team at 1-833-745-5314, Monday to Friday between 10:00 AM and 5:00 PM EST.
+
+Thank you for your patience, and understanding. We appreciate you bringing this to our attention.
+
+Best regards,</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANNOUNCEMENTS ============ -->
+    <section class="page" id="announcements">
+      <div class="page-head">
+        <div class="page-eyebrow">Stay Informed</div>
+        <h1 class="page-title">Announcements &amp; Alerts</h1>
+        <p class="page-desc">Recent process changes, security notices, and internal memos worth knowing.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head neutral">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l6 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15 8a4 4 0 0 1 0 8"/><path d="M18 5a8 8 0 0 1 0 14"/></svg>
+          <h3>Recent Announcements</h3>
+        </div>
+        <div class="card-body">
+          <div class="grid-cards">
+            <div class="mini-card">
+              <span class="tag payment">Payment Processing · Jun 19, 2026</span>
+              <h4>Switch: TDMS → JPM Chase</h4>
+              <p>All debit and credit card transactions now route via Forte (JPM Chase) into our bank account — no longer from TDMS. Collections team: try debit card transactions to confirm this works.</p>
+            </div>
+            <div class="mini-card">
+              <span class="tag invoicing">Invoicing · Jun 11, 2026</span>
+              <h4>Customer Invoice PDFs — Link Only</h4>
+              <p>Effective immediately: retail/non-PAP customer invoice emails now include a direct download link — no attachments. Customers do NOT need to sign in. Master account (wholesale) customers still receive PDF + Excel attachments.</p>
+            </div>
+            <div class="mini-card">
+              <span class="tag feature">New Feature</span>
+              <h4>2-Way Text Notifications</h4>
+              <p>Customers with a valid mobile number now receive real-time text alerts from monitoring and can cancel or dispatch alarms via text. Texts originate from (647) 360-7546. If no response, standard procedures apply.</p>
+            </div>
+          </div>
+          <div style="margin-top:16px;" class="banner danger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L1.8 18a1.5 1.5 0 0 0 1.3 2.2h17.8a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z"/></svg>
+            <span><strong>Fluent is No Longer Affiliated with a.p.i. Alarm Inc.</strong> a.p.i. Alarm now manages all aspects of formerly Fluent accounts. Customers require no action. If anyone asks a customer to sign a new contract or change anything, they are doing so fraudulently. Single point of contact for all service, support, upgrades, billing: <strong>1-833-745-5632</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-head danger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M12 8v5M12 16h.01"/></svg>
+            <h3>Security Alert — Link Scams</h3>
+          </div>
+          <div class="card-body">
+            <p style="margin:0 0 10px;font-size:13.5px;">Anything with a LINK is scam team.</p>
+            <p style="margin:0;font-size:13.5px;color:var(--muted);">Unless it's the client who has been communicating with you for days, or unless you knew what the email was for.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head danger">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M12 8v5M12 16h.01"/></svg>
+            <h3>Security Alert — Bonus / Pay Phishing</h3>
+          </div>
+          <div class="card-body">
+            <p style="margin:0;font-size:13.5px;">If you get an email about a bonus or pay increase, please mark it as spam — do not open it.</p>
+          </div>
+          <div class="card-note">— Mamoon Ashraf, 10:49 AM</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head neutral">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          <h3>Reference Document — Guard Response Fee Adjustment Notice</h3>
+        </div>
+        <div class="card-body">
+          <p style="margin:0 0 10px;font-size:13px;color:var(--muted);">Filed for reference: Document dated May 21, 2026 (v3), distributed to a Former BSH Customer Test Tranche.</p>
+          <div class="tmpl">
+            <div class="tmpl-body" style="max-height:none;">Subject: IMPORTANT: Service Announcement
+
+You are currently enrolled in our private, on-demand Guard Response Service. Your monthly fee includes 2 live guard responses in each calendar year.
+
+Starting in the next billing cycle, you will notice a modest adjustment to your monthly charges — an additional $1.50, covering mobile guard response, eyewitness threat verification, and false alarm verification.
+
+If you would like to remove the guard response service and avoid the $1.50 increase, or if you have any questions, you can reach dedicated customer care Weekdays 9am–5pm EST at 1-833-745-5632 (ask about the "Guard Service Adjustment").</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRAINING & RESOURCES ============ -->
+    <section class="page" id="training">
+      <div class="page-head">
+        <div class="page-eyebrow">Learning</div>
+        <h1 class="page-title">Training &amp; Resources</h1>
+        <p class="page-desc">Onboarding files, reference documents, training walkthroughs, and software installers. Click any item to download.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          <h3>Files</h3>
+        </div>
+        <div class="card-body res-list">
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+            <div class="res-info"><strong>a.p.i. Alarm Customer Letter — October 1</strong><span>Official transition letter</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1BxcF6EHJCzi2Q5mC6b54OyXD-6uew9pU/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+            <div class="res-info"><strong>Bell Security &amp; Automation — Terms of Service</strong><span>Legacy account reference</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1hMqQ15sPzXNwHu9O_meElej9VcUowNc4/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+            <div class="res-info"><strong>Bell Smart Home — Terms of Service</strong><span>Legacy account reference</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1027x1C8vWcGcWZn0ZE_SAS7nRKUeDbS8/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          <h3>Resources</h3>
+        </div>
+        <div class="card-body res-list">
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+            <div class="res-info"><strong>a.p.i. Alarm Payment Information</strong><span>Payment methods &amp; processing reference</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1Lk4l7DZkDVUexW1yO4lvHyiZG6GA30bg/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+            <div class="res-info"><strong>PAP Form</strong><span>Pre-authorized payment form</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1GGxm9TCj0j5EGE9nsIyLoy_-_s4iuNoU/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+            <div class="res-info"><strong>Final Demand Letter</strong><span>Collections escalation template</span></div>
+            <a class="dl-btn" download target="_blank" href="https://docs.google.com/document/d/1OiLsA4hkPV-QSnB7KqZTrhfChvDEmxE5/edit?usp=drive_link&ouid=113320315352519750357&rtpof=true&sd=true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9M12 12L2.5 6.5 12 3l9.5 3.5L12 12z"/><path d="M6 9.5v6c0 1 2.7 2.5 6 2.5s6-1.5 6-2.5v-6"/></svg>
+          <h3>Training Modules</h3>
+        </div>
+        <div class="card-body res-list">
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+            <div class="res-info"><strong>Installing Avaya One-X Communicator</strong><span>Softphone setup walkthrough</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1FzXnBBVYUmwVTmY375MT_wAQdrt9KGUK/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+            <div class="res-info"><strong>VPN Installation</strong><span>Remote access setup walkthrough</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1HWl8aTJ_KlV-1znkLeciLuQEtCdN2IyT/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+            <div class="res-info"><strong>Sedona Basic Navigation</strong><span>Core system walkthrough</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1yOS-4SdEZPmjhaS1x65xEEoOU7khETpy/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+            <div class="res-info"><strong>Updating Customer's Contact Information</strong><span>Sedona how-to</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1OCbm4w1VK2xpKwc7JkyZc7Y0u3gLJVxw/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+            <div class="res-info"><strong>Creating Sedona Web Portal Credentials for Customer</strong><span>Sedona how-to</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1hiwWp9PaP0rrZx3PtdMVT0dt_vOsQ9VT/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4V8z"/></svg></div>
+            <div class="res-info"><strong>Downloading Invoice and Statement for Customer</strong><span>Sedona how-to</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1rFcvvWwwQNdAHrZtqLRCHciCECCuWiqh/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h.01M9 15h.01M15 9h.01M15 15h.01"/></svg>
+          <h3>Software Tools</h3>
+        </div>
+        <div class="card-body res-list">
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h.01M9 15h.01M15 9h.01M15 15h.01"/></svg></div>
+            <div class="res-info"><strong>Avaya</strong><span>Softphone installer</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1HyNyPLW5CSAk2aCighhexF7cpDNy2u81/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+          <div class="res-item">
+            <div class="res-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h.01M9 15h.01M15 9h.01M15 15h.01"/></svg></div>
+            <div class="res-info"><strong>Global Protect VPN</strong><span>VPN client installer</span></div>
+            <a class="dl-btn" download target="_blank" href="https://drive.google.com/file/d/1poBeGjoCToQLOQwIPt_c91n3_ZoHJZwR/view?usp=drive_link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>Download</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg><span id="toastText">Copied to clipboard</span></div>
+
+<script>
+  // ---------- Navigation ----------
+  const navItems = document.querySelectorAll('.nav-item[data-page]');
+  const pages = document.querySelectorAll('.page');
+
+  function showPage(id){
+    pages.forEach(p => p.classList.toggle('active', p.id === id));
+    navItems.forEach(n => n.classList.toggle('active', n.dataset.page === id));
+    document.querySelector('.main').scrollTo({top:0, behavior:'smooth'});
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => showPage(item.dataset.page));
+  });
+
+  document.querySelectorAll('[data-goto]').forEach(el => {
+    el.addEventListener('click', () => showPage(el.dataset.goto));
+  });
+
+  // ---------- Copy helpers ----------
+  const toast = document.getElementById('toast');
+  const toastText = document.getElementById('toastText');
+  let toastTimer;
+
+  function showToast(msg){
+    toastText.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  function copyText(btn, text){
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('Copied "' + text + '"');
+    }).catch(() => {
+      showToast('Could not copy — please copy manually');
+    });
+  }
+
+  function copyTemplate(btn, elId){
+    const el = document.getElementById(elId);
+    const text = el.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      const original = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>Copied';
+      showToast('Template copied to clipboard');
+      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = original; }, 1600);
+    }).catch(() => {
+      showToast('Could not copy — please copy manually');
+    });
+  }
+
+  // ---------- Simple search across nav ----------
+  const searchInput = document.getElementById('searchInput');
+  searchInput.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){
+      const q = searchInput.value.trim().toLowerCase();
+      if(!q) return;
+      for(const page of pages){
+        if(page.innerText.toLowerCase().includes(q)){
+          showPage(page.id);
+          break;
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
