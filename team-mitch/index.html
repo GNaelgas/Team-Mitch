@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Team Mitch · Virtual Hire Resources</title>
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F5F7; --card:#FFFFFF; --ink:#1E293B; --navy:#0F172A;
+  --primary:#2563EB; --primary-700:#1D4ED8; --primary-tint:#EFF4FE; --primary-tint-2:#D3E0FB;
+  --accent:#0D9488; --accent-700:#0F766E; --accent-tint:#E6F6F4; --accent-tint-2:#BFE6E1;
+  --steel:#64748B; --line:#E2E8F0; --line-strong:#CBD5E1; --muted:#475569;
+  --stop:#B42318; --stop-tint:#FDF1F0;
+  --radius-lg:14px; --radius:9px; --radius-sm:6px;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 120px); -webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.55;font-feature-settings:"tnum" 1}
+img{max-width:100%}
+a{color:var(--primary)}
+:focus-visible{outline:3px solid #93B4F5;outline-offset:2px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- Banner ---------- */
+.banner{background:var(--navy);color:#fff;position:sticky;top:0;z-index:40;box-shadow:0 1px 0 rgba(15,23,42,.25)}
+.banner-inner{max-width:1180px;margin:0 auto;padding:16px 24px 0;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:14px;color:#fff;text-decoration:none;min-width:0}
+.brand img{height:46px;width:auto;border-radius:8px;box-shadow:0 0 0 2px rgba(255,255,255,.85);flex:none;background:#fff}
+.brand h1{margin:0;font-size:24px;line-height:1.1;font-weight:800;letter-spacing:-.01em}
+.brand p{margin:3px 0 0;font-size:13px;color:#94A3B8;font-weight:500}
+.tabs{max-width:1180px;margin:0 auto;padding:14px 24px 0;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;color:#CBD5E1;text-decoration:none;font-weight:600;font-size:14px;padding:10px 16px 11px;border-radius:10px 10px 0 0;white-space:nowrap;transition:background .15s,color .15s}
+.tabs a:hover{background:rgba(255,255,255,.09);color:#fff}
+.tabs a[aria-current="page"]{background:var(--bg);color:var(--navy)}
+
+/* ---------- Layout ---------- */
+main{max-width:1180px;margin:0 auto;padding:28px 24px 40px}
+.page{display:none}
+.page.active{display:block}
+.page-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,400px);gap:20px 32px;align-items:end;margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.page-head h2{margin:0;font-size:30px;line-height:1.15;font-weight:800;letter-spacing:-.015em}
+.page-head p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+h3.section-title{font-size:18px;margin:34px 0 12px;font-weight:700;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h3.section-title small{font-size:13px;color:var(--steel);font-weight:500}
+.grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+
+/* ---------- Panels ---------- */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+.panel-head{padding:14px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.panel-head h4{margin:0;font-size:15.5px;font-weight:700}
+.panel-head .ic{color:var(--primary)}
+.panel-body{padding:16px 20px}
+.panel-body > :first-child{margin-top:0}
+.panel-body > :last-child{margin-bottom:0}
+.panel-foot{padding:11px 20px;border-top:1px solid var(--line);font-size:13px;color:var(--steel);background:#F8F9FA}
+.panel.lead{border-color:var(--line-strong)}
+.panel.lead .panel-head{background:var(--navy);color:#fff;border-bottom:0}
+.panel.lead .panel-head .ic{color:#5EEAD4}
+
+.note{background:var(--primary-tint);border-radius:var(--radius);padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.note .ic{color:var(--primary);margin-top:2px;flex:none}
+.stop{background:var(--stop-tint);color:#7A1A12;border-radius:var(--radius);padding:12px 14px;display:flex;gap:10px;align-items:flex-start;border-left:3px solid var(--stop)}
+.stop .ic{color:var(--stop);margin-top:2px;flex:none}
+.stop-inline{display:inline-block;background:var(--stop-tint);color:var(--stop);font-weight:700;font-size:12.5px;padding:3px 8px;border-radius:5px;margin-top:6px}
+.who{font-size:13px;color:var(--steel)}
+
+/* ---------- Tables ---------- */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th{text-align:left;font-size:12.5px;font-weight:700;color:var(--steel);padding:11px 20px;border-bottom:1px solid var(--line);background:#F8F9FA}
+td{padding:11px 20px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:600}
+td.none{color:#A0AEC0}
+.kv td:first-child{width:38%;font-weight:600;color:var(--ink)}
+
+/* ---------- Copy chips ---------- */
+.chip{appearance:none;border:1px solid var(--primary-tint-2);background:var(--primary-tint);color:var(--primary-700);font:inherit;font-size:14px;font-weight:600;padding:5px 10px 5px 8px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .12s,border-color .12s;font-variant-numeric:tabular-nums;max-width:100%}
+.chip .ic{width:14px;height:14px;opacity:.7;flex:none}
+.chip:hover{background:var(--primary-tint-2);border-color:#A9C2F7}
+.chip.done{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.done .ic{opacity:1}
+.chip.email{white-space:normal;word-break:break-all;text-align:left}
+.chip.lg{font-size:16px;padding:8px 13px 8px 11px}
+
+.btn{appearance:none;border:1px solid var(--accent);background:var(--accent);color:#fff;font:inherit;font-weight:600;font-size:13.5px;padding:7px 13px;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;text-decoration:none}
+.btn:hover{background:var(--accent-700);border-color:var(--accent-700)}
+.btn.ghost{background:#fff;color:var(--accent-700);border-color:var(--accent-tint-2)}
+.btn.ghost:hover{background:var(--accent-tint)}
+.btn .ic{width:15px;height:15px}
+.btn.done{background:var(--navy);border-color:var(--navy);color:#fff}
+
+.line-copy{display:flex;align-items:center;gap:12px;background:#F8F9FA;border:1px solid var(--line);border-radius:var(--radius);padding:10px 10px 10px 14px}
+.line-copy code{flex:1;min-width:0;font-family:inherit;font-weight:600;font-size:14px;color:var(--ink);word-break:break-word}
+.line-copy .lbl{font-size:12.5px;color:var(--steel);font-weight:600;flex:none}
+
+/* ---------- Steps (real sequence) ---------- */
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:0 0 18px 44px}
+.steps li::before{content:counter(s);position:absolute;left:0;top:-1px;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font-weight:700;font-size:13.5px;display:grid;place-items:center}
+.steps li:not(:last-child)::after{content:"";position:absolute;left:13.5px;top:30px;bottom:2px;width:1px;background:var(--line-strong)}
+.steps strong{display:block;font-size:15px}
+.steps p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.steps .line-copy{margin-top:10px}
+.bullets{margin:8px 0 0;padding-left:20px}
+.bullets li{margin:3px 0}
+
+/* ---------- Templates ---------- */
+.tpl-layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:28px;align-items:start}
+.toc{position:sticky;top:150px;font-size:14px}
+.toc h5{margin:0 0 6px;font-size:13px;color:var(--steel);font-weight:700}
+.toc ul{list-style:none;margin:0 0 18px;padding:0;border-left:2px solid var(--line)}
+.toc a{display:block;padding:4px 0 4px 12px;margin-left:-2px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;line-height:1.35}
+.toc a:hover{color:var(--primary);border-left-color:var(--primary)}
+.tpl-group + .tpl-group{margin-top:34px}
+.tpl-group > h3{font-size:18px;margin:0 0 4px}
+.tpl-group > p{margin:0 0 14px;color:var(--muted);font-size:14px}
+details.tpl{background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);margin-bottom:10px}
+details.tpl[open]{border-color:var(--line-strong)}
+details.tpl > summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:14px 16px 14px 18px}
+details.tpl > summary::-webkit-details-marker{display:none}
+.tpl-title{flex:1;min-width:0}
+.tpl-title strong{display:block;font-size:15px}
+.tpl-title span{display:block;font-size:13px;color:var(--steel)}
+.chev{width:18px;height:18px;color:var(--steel);transition:transform .18s;flex:none}
+details[open] .chev{transform:rotate(180deg)}
+.tag{font-size:12px;font-weight:600;padding:2px 8px;border-radius:20px;background:#F4F5F7;color:var(--muted);border:1px solid var(--line);flex:none}
+.tag.internal{background:var(--primary-tint);color:var(--primary-700);border-color:var(--primary-tint-2)}
+.tpl-body{padding:0 18px 18px;display:grid;gap:12px}
+.tpl-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13.5px}
+.tpl-meta .lbl{color:var(--steel);font-weight:600}
+pre.text{margin:0;white-space:pre-wrap;word-wrap:break-word;font-family:inherit;font-size:14.5px;line-height:1.6;background:#F8F9FA;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;color:var(--ink);max-width:80ch}
+.ph{background:#FFF6D6;color:#5C4400;border-radius:3px;padding:0 2px}
+.body-bar{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.body-bar span{font-size:13px;color:var(--steel);font-weight:600}
+
+/* ---------- Home ---------- */
+.welcome{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:stretch;margin-bottom:30px}
+.welcome-copy h2{font-size:40px;line-height:1.05;margin:4px 0 12px;font-weight:800;letter-spacing:-.025em}
+.welcome-copy p{color:var(--muted);font-size:16px;max-width:54ch;margin:0 0 20px}
+.welcome-copy .search{max-width:520px}
+.dial{background:var(--navy);color:#fff;border-radius:var(--radius-lg);padding:20px 22px}
+.dial h3{margin:0 0 4px;font-size:16px}
+.dial p{margin:0 0 14px;color:#94A3B8;font-size:13.5px}
+.dial-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:9px 0;border-top:1px solid rgba(255,255,255,.14)}
+.dial-row span{font-weight:600;font-size:14px}
+.dial .chip{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.22);color:#fff}
+.dial .chip:hover{background:rgba(255,255,255,.18)}
+.dial .chip.done{background:var(--accent);border-color:var(--accent);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+a.card{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 18px 16px;transition:border-color .15s,background .15s}
+a.card:hover{border-color:var(--accent);background:#FFFFFF}
+a.card .ic{color:var(--accent);width:22px;height:22px}
+a.card h4{margin:10px 0 4px;font-size:16px}
+a.card p{margin:0;color:var(--muted);font-size:13.5px}
+a.card .count{display:block;margin-top:12px;font-size:12.5px;color:var(--steel);font-weight:600}
+.alert-strip{display:grid;gap:10px;margin-top:6px}
+
+/* ---------- Files ---------- */
+.file-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px}
+a.file{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;text-decoration:none;color:var(--ink);transition:border-color .15s,background .15s}
+a.file:hover{border-color:var(--accent);background:#FFFFFF}
+.ext{width:44px;height:50px;border-radius:6px 14px 6px 6px;background:var(--accent-tint);color:var(--accent-700);font-weight:800;font-size:11.5px;display:grid;place-items:end center;padding-bottom:7px;border:1px solid var(--accent-tint-2)}
+.ext.exe,.ext.msi{background:#F4F5F7;color:var(--muted);border-color:var(--line-strong)}
+.f-text strong{display:block;font-size:14.5px;line-height:1.3}
+.f-text span{display:block;font-size:13px;color:var(--steel)}
+a.file .ic{color:var(--accent);width:20px;height:20px}
+
+/* ---------- Search ---------- */
+.search{position:relative;width:100%}
+.search input{width:100%;font:inherit;font-size:15px;padding:11px 44px 11px 40px;border:1.5px solid var(--accent-tint-2);border-radius:10px;background:#fff;color:var(--ink)}
+.search input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(13,148,136,.18)}
+.search > .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--accent);width:17px;height:17px;pointer-events:none}
+.search kbd{position:absolute;right:11px;top:50%;transform:translateY(-50%);font:inherit;font-size:12px;color:var(--steel);border:1px solid var(--line-strong);border-radius:5px;padding:0 6px;background:#F8FAFC}
+.results{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#fff;border:1px solid var(--line-strong);border-radius:12px;box-shadow:0 14px 34px -12px rgba(15,23,42,.28);list-style:none;margin:0;padding:6px;z-index:30;max-height:min(440px,60vh);overflow-y:auto;display:none}
+.results.open{display:block}
+.results li a{display:block;padding:9px 11px;border-radius:8px;text-decoration:none;color:var(--ink)}
+.results li a:hover,.results li a.sel{background:var(--accent-tint)}
+.results .r-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.results .r-title{font-weight:700;font-size:14px}
+.results .r-page{font-size:12px;color:var(--steel);flex:none}
+.results .r-snip{font-size:13px;color:var(--muted);margin-top:2px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.results mark{background:#FFE58A;color:inherit;border-radius:2px;padding:0 1px}
+.results .empty{padding:12px;color:var(--muted);font-size:14px}
+.flash{animation:flash 1.8s ease-out}
+@keyframes flash{0%,30%{box-shadow:0 0 0 4px rgba(37,99,235,.35)}100%{box-shadow:0 0 0 4px rgba(37,99,235,0)}}
+
+/* ---------- Toast / footer ---------- */
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:10px 16px;border-radius:9px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:60;max-width:calc(100% - 32px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1px solid var(--line);color:var(--steel);font-size:13.5px}
+footer div{max-width:1180px;margin:0 auto;padding:20px 24px 28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ic{width:18px;height:18px;flex:none}
+h1,h2,h3,h4,h5,.tpl-title strong,.r-title{font-family:"Space Grotesk","Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+.page-head h2,.welcome-copy h2,.brand h1{font-weight:700;letter-spacing:-.01em}
+h3.section-title,.tpl-group > h3,.dial h3{font-weight:700}
+.panel-head h4,a.card h4,.toc h5{font-weight:700}
+.tpl-title strong,.r-title{font-weight:700;font-size:14px}
+.page-head p,.welcome-copy p{font-weight:400}
+.guard-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:14px 20px;align-items:start}
+@media (max-width:900px){.guard-grid{grid-template-columns:1fr}}
+
+@media (max-width:900px){
+  .page-head,.welcome,.tpl-layout{grid-template-columns:1fr}
+  .toc{position:static}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .welcome-copy h2{font-size:32px}
+}
+@media (max-width:560px){
+  .banner-inner{padding:12px 16px 0}
+  .brand img{height:38px}
+  .brand h1{font-size:20px}
+  .brand p{font-size:12px}
+  .tabs{padding:10px 16px 0}
+  main{padding:22px 16px 32px}
+  .page-head h2{font-size:25px}
+  th,td{padding:10px 14px}
+  .file-list{grid-template-columns:1fr}
+  .line-copy{flex-wrap:wrap}
+  .search kbd{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m10.3 3.9-8.2 14A2 2 0 0 0 3.8 21h16.4a2 2 0 0 0 1.7-3.1l-8.2-14a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5M12 15V3"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/></symbol>
+</svg>
+
+<header class="banner">
+  <div class="banner-inner">
+    <a class="brand" href="#home" aria-label="Team Mitch home">
+      <img src="assets/logo.png" alt="a.p.i. Alarm Inc. logo">
+      <div>
+        <h1>Team Mitch</h1>
+        <p>Virtual Hire - Sharepoint and Resources</p>
+      </div>
+    </a>
+  </div>
+  <nav class="tabs" aria-label="Pages">
+    <a href="#home">Home</a>
+    <a href="#routing">Call Routing</a>
+    <a href="#billing">Billing &amp; Payments</a>
+    <a href="#templates">Email Templates</a>
+    <a href="#announcements">Announcements</a>
+    <a href="#training">Training &amp; Resources</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- =================== HOME =================== -->
+<section class="page" id="home" data-page="home" data-name="Home">
+  <div class="welcome">
+    <div class="welcome-copy">
+      <h2>Welcome to Team Mitch</h2>
+      <p>Everything the API VH Collections team reaches for during a call: transfer numbers, escalation emails, ready-to-send templates, billing policy, and training files. Click any number, extension, email or template to copy it.</p>
+      <div data-searchbox data-placeholder="Search numbers, emails, templates, files…"></div>
+    </div>
+    <aside class="dial" aria-label="Most-used numbers">
+      <h3>Most-used transfers</h3>
+      <p>Tap to copy.</p>
+      <div class="dial-row"><span>Billing</span><button class="chip">1-833-745-5130</button></div>
+      <div class="dial-row"><span>Retention / Cancellation</span><button class="chip">1-833-745-5314</button></div>
+      <div class="dial-row"><span>Customer Care</span><button class="chip">1-833-745-5153</button></div>
+      <div class="dial-row"><span>API master accounts · Tameika</span><button class="chip" data-copy="2255">ext. 2255</button></div>
+      <div class="dial-row"><span>Monitoring Station</span><button class="chip">1-800-268-6870</button></div>
+    </aside>
+  </div>
+
+  <h3 class="section-title">Pages</h3>
+  <div class="cards">
+    <a class="card" href="#routing"><svg class="ic"><use href="#i-phone"/></svg><h4>Call Routing</h4><p>Department numbers, branch extensions, escalation emails and the French &amp; Quebec queue.</p><span class="count">Transfers · Branches · Queues</span></a>
+    <a class="card" href="#billing"><svg class="ic"><use href="#i-card"/></svg><h4>Billing &amp; Payments</h4><p>Ownership changes, refund policy, card-on-file rules and the payment trace &amp; apply process.</p><span class="count">Policy · Cash application</span></a>
+    <a class="card" href="#templates"><svg class="ic"><use href="#i-mail"/></svg><h4>Email Templates</h4><p>Cancellation, contract term and billing correspondence, ready to copy.</p><span class="count">10 templates</span></a>
+    <a class="card" href="#announcements"><svg class="ic"><use href="#i-bell"/></svg><h4>Announcements</h4><p>Process changes, the Go Green promo, security alerts and the guard response notice.</p><span class="count">Latest updates</span></a>
+    <a class="card" href="#training"><svg class="ic"><use href="#i-book"/></svg><h4>Training &amp; Resources</h4><p>Onboarding letters, payment forms, Sedona walkthroughs and software installers.</p><span class="count">15 downloads</span></a>
+  </div>
+
+  <h3 class="section-title">Keep in mind</h3>
+  <div class="alert-strip">
+    <div class="stop" data-s="Fluent no longer affiliated"><svg class="ic"><use href="#i-alert"/></svg><div><strong>Fluent is no longer affiliated with a.p.i. Alarm Inc.</strong> Single point of contact for former Fluent customers: <button class="chip">1-833-745-5632</button></div></div>
+    <div class="note"><svg class="ic"><use href="#i-info"/></svg><div>All API master-account issues go to <strong>Tameika (ext. 2255)</strong> after you've gathered the details. <a href="#routing:api-escalation">See the team update</a></div></div>
+    <div class="note"><svg class="ic"><use href="#i-info"/></svg><div>Cash application requests: one email per request to APIreceivables@apialarm.com with the exact subject line. <a href="#billing:trace">See the process</a></div></div>
+  </div>
+</section>
+
+<!-- =================== CALL ROUTING =================== -->
+<section class="page" id="routing" data-page="routing" data-name="Call Routing">
+  <div class="page-head">
+    <div><h2>Call Routing</h2><p>Where to send a request, by department and branch. Click any number, extension or address to copy it.</p></div>
+    <div data-searchbox></div>
+  </div>
+
+  <div class="panel lead" id="transfers" data-s="Transfers & email escalation by department">
+    <div class="panel-head"><svg class="ic"><use href="#i-phone"/></svg><h4>Request transfer &amp; email escalation</h4></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Request type</th><th>Toll-free number</th><th>Email escalation</th></tr></thead>
+      <tbody>
+        <tr data-s="Sales"><td class="k">Sales</td><td><button class="chip">1-833-745-5311</button></td><td><button class="chip email">forms@apialarm.com</button></td></tr>
+        <tr data-s="Upgrade"><td class="k">Upgrade</td><td><button class="chip">1-833-745-5732</button></td><td class="none">—</td></tr>
+        <tr data-s="Retention / Cancellation / Rate Reduction"><td class="k">Retention / Cancellation / Rate Reduction</td><td><button class="chip">1-833-745-5314</button></td><td><button class="chip email">apiwelcomesyou@apialarm.com</button></td></tr>
+        <tr data-s="Technical Support"><td class="k">Technical Support</td><td><button class="chip">1-833-745-5253</button></td><td><button class="chip email">service@apialarm.com</button></td></tr>
+        <tr data-s="Customer Care"><td class="k">Customer Care</td><td><button class="chip">1-833-745-5153</button></td><td><button class="chip email">customerservice@apialarm.com</button></td></tr>
+        <tr data-s="Billing"><td class="k">Billing</td><td><button class="chip">1-833-745-5130</button></td><td><button class="chip email">apireceivables@apialarm.com</button></td></tr>
+        <tr data-s="Monitoring Station"><td class="k">Monitoring Station</td><td><button class="chip">1-800-268-6870</button></td><td class="none">—</td></tr>
+        <tr data-s="French Customer Service"><td class="k">French Customer Service</td><td><button class="chip" data-copy="3500">ext. 3500</button></td><td class="none">—</td></tr>
+        <tr data-s="French & Quebec Retention / Sales"><td class="k">French &amp; Quebec Retention / Sales</td><td><button class="chip" data-copy="2588">ext. 2588</button></td><td class="none">—</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <h3 class="section-title">Inbound call routing <small>by branch</small></h3>
+  <div class="panel" id="branches">
+    <div class="table-wrap"><table>
+      <thead><tr><th>Branch</th><th>Transfer to</th><th>Extension / number</th></tr></thead>
+      <tbody>
+        <tr data-s="Live Patrol — Candace"><td class="k">Live Patrol</td><td>Candace</td><td><button class="chip">2541</button></td></tr>
+        <tr data-s="Dealer — Marion"><td class="k">Dealer</td><td>Marion</td><td><button class="chip">2264</button></td></tr>
+        <tr data-s="National / Toronto — Tameika, Buddoo"><td class="k">National / Toronto</td><td>Tameika, Buddoo</td><td><button class="chip">2255</button></td></tr>
+        <tr data-s="Winnipeg — Ruchi Patel"><td class="k">Winnipeg</td><td>Ruchi Patel</td><td><button class="chip">2291</button></td></tr>
+        <tr data-s="BOB / Bill on Behalf — Sue Boodooosingh"><td class="k">BOB / Bill on Behalf</td><td>Sue Boodooosingh</td><td><button class="chip">2235</button></td></tr>
+        <tr data-s="Trent / Ranguard / Ensign / Vigil — Gil"><td class="k">Trent / Ranguard / Ensign / Vigil</td><td>Gil</td><td><button class="chip">2621</button></td></tr>
+        <tr data-s="Fluent Canada"><td class="k">Fluent Canada</td><td>Message Bell GC first</td><td class="none">—</td></tr>
+        <tr data-s="Fluent US"><td class="k">Fluent US</td><td>Message Bell GC first</td><td class="none">—</td></tr>
+        <tr data-s="French Customer Service extension"><td class="k">French Customer Service</td><td class="none">—</td><td><button class="chip">3500</button></td></tr>
+        <tr data-s="French & Quebec Retention / Sales extension"><td class="k">French &amp; Quebec Retention / Sales</td><td class="none">—</td><td><button class="chip">2588</button></td></tr>
+        <tr data-s="Guard Response Fee Removal"><td class="k">Guard Response Fee Removal</td><td><button class="chip">1-833-745-5632</button></td><td class="none">—</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="grid-2" style="margin-top:22px">
+    <div class="panel" id="api-escalation" data-s="Team update — API master account escalations to Tameika">
+      <div class="panel-head"><svg class="ic"><use href="#i-shield"/></svg><h4>Team update: API account escalations</h4></div>
+      <div class="panel-body">
+        <div class="note"><svg class="ic"><use href="#i-info"/></svg><div>All API master-account issues must be transferred to <strong>Tameika</strong> <button class="chip" data-copy="2255">ext. 2255</button></div></div>
+        <p style="color:var(--muted);font-size:14px">Before transferring, ask the questions you need to fully understand the customer's concern. This keeps information accurate and prevents unnecessary transfers.</p>
+        <ol class="steps">
+          <li><strong>Gather all relevant details first</strong></li>
+          <li><strong>Verify the customer's concern</strong></li>
+          <li><strong>Warm transfer to Tameika if it's API-related</strong></li>
+        </ol>
+      </div>
+      <div class="panel-foot">Mitch Gutierrez, API VH Collections Manager (July 2026)</div>
+    </div>
+
+    <div class="panel" id="french-queue" data-s="French & Quebec retention / sales call queue">
+      <div class="panel-head"><svg class="ic"><use href="#i-phone"/></svg><h4>French &amp; Quebec retention / sales queue</h4></div>
+      <div class="panel-body" style="padding-bottom:6px"><p style="color:var(--muted);font-size:14px">A dedicated queue for French-speaking customers and customers located in Quebec, for retention and sales inquiries.</p></div>
+      <div class="table-wrap"><table class="kv" style="min-width:0">
+        <tbody>
+          <tr><td>Queue extension</td><td><button class="chip">2588</button></td></tr>
+          <tr><td>Hours of operation</td><td>Monday to Friday, 9:00 a.m. – 5:00 p.m. ET</td></tr>
+          <tr><td>After hours</td><td>Ask the customer to call back the next business day during operating hours.</td></tr>
+          <tr><td>Email: Retention</td><td><button class="chip email">apiwelcomesyou@apialarm.com</button></td></tr>
+          <tr><td>Email: Sales</td><td><button class="chip email">forms@apialarm.com</button></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== BILLING =================== -->
+<section class="page" id="billing" data-page="billing" data-name="Billing & Payments">
+  <div class="page-head">
+    <div><h2>Billing &amp; Payments</h2><p>Ownership changes, refund policy, card-on-file rules and how to request a payment trace.</p></div>
+    <div data-searchbox></div>
+  </div>
+
+  <div class="grid-2">
+    <div class="panel" id="ownership" data-s="Customer ownership / name & address changes">
+      <div class="panel-head"><svg class="ic"><use href="#i-user"/></svg><h4>Customer ownership / name &amp; address</h4></div>
+      <div class="panel-body">
+        <div class="note"><svg class="ic"><use href="#i-info"/></svg><div>You are only authorized to update <strong>billing address, phone, and email address</strong> in Sedona.</div></div>
+      </div>
+      <div class="table-wrap"><table class="kv" style="min-width:0"><tbody>
+        <tr><td>Ownership / name changes / site address change</td><td>Email <button class="chip email">forms@apialarm.com</button><div style="font-size:13.5px;color:var(--muted);margin-top:6px">Include account number + requested change in the subject line.</div><span class="stop-inline">Do NOT give this email to customers</span></td></tr>
+        <tr><td>Address changes</td><td>Email <button class="chip email">forms@apialarm.com</button><div style="font-size:13.5px;color:var(--muted);margin-top:6px">Handled by the Sales team.</div></td></tr>
+      </tbody></table></div>
+      <div class="panel-foot">Thiranga Perera, Director of Finance (Feb 25, 2026)</div>
+    </div>
+
+    <div class="panel" id="refunds" data-s="Refund policy — what to tell customers (overpayment, credit)">
+      <div class="panel-head"><svg class="ic"><use href="#i-card"/></svg><h4>Refund policy: what to tell customers</h4></div>
+      <div class="panel-body">
+        <div class="note"><svg class="ic"><use href="#i-info"/></svg><div><strong>No refunds on active accounts.</strong> Overpayment stays as a credit applied to future invoices.</div></div>
+      </div>
+      <div class="table-wrap"><table class="kv" style="min-width:0"><tbody>
+        <tr><td>Overpayment / credit</td><td>Credit remains on the account and is automatically applied to the next billing cycle before charging the card.</td></tr>
+        <tr><td>Example</td><td>$55 credit on a $25/mo account covers the next 2 invoices; the card is only charged again after the credit is used up.</td></tr>
+        <tr><td>Refunds</td><td>Only considered when the account is <strong>cancelled</strong>, with no pending billings and no outstanding invoices.</td></tr>
+      </tbody></table></div>
+      <div class="panel-foot">Thiranga Perera, Director of Finance</div>
+    </div>
+  </div>
+
+  <div class="panel" id="cards-on-file" style="margin-top:18px" data-s="Cards-on-file billing update — check off all invoices, not Quebec">
+    <div class="panel-head"><svg class="ic"><use href="#i-card"/></svg><h4>Cards on file: billing update</h4></div>
+    <div class="panel-body" style="display:grid;gap:12px">
+      <p style="margin:0">New cards are now added to the system automatically.</p>
+      <div class="note"><svg class="ic"><use href="#i-info"/></svg><div>Check off all invoices (recurring, service, etc.) so we can charge for everything on file, not just the recurring.</div></div>
+      <div class="stop"><svg class="ic"><use href="#i-alert"/></svg><div><strong>Do not do this for any customer in Quebec.</strong> Written authorization is required. If it goes through, it will be API collected. Keep an eye on Quebec, as laws there require permission first.</div></div>
+    </div>
+    <div class="panel-foot">Mamoon Ashraf, Accounts Receivable Manager (Jul 29, 2026)</div>
+  </div>
+
+  <h3 class="section-title" id="trace" data-s="Payment trace & apply request — new process (effective Apr 30, 2026)">Payment trace &amp; apply request <small>New process, effective Apr 30, 2026</small></h3>
+  <div class="grid-2">
+    <div class="panel">
+      <div class="panel-body" style="display:grid;gap:16px">
+        <div class="stop"><svg class="ic"><use href="#i-alert"/></svg><div>Do NOT email or copy Shailesh or Jeffrey directly about cash application adjustments or follow-ups. Use the process below. <strong>One email per request only</strong>; do not send multiple emails or copy Jeffrey, Shailesh, or Parmjit.</div></div>
+        <ol class="steps">
+          <li><strong>Submit requests via email</strong><p>Send all requests to <button class="chip email">APIreceivables@apialarm.com</button></p></li>
+          <li><strong>Use the exact subject line</strong><p>Emails without it will not be addressed in a timely manner.</p>
+            <div class="line-copy" data-s="Cash application subject line"><code>COLLECTIONS TEAM - **CASH APPLICATION** - [Customer Number/Name]</code><button class="btn" data-copy="COLLECTIONS TEAM - **CASH APPLICATION** - [Customer Number/Name]">Copy</button></div></li>
+          <li><strong>Include a clear description</strong><p>Don't just forward the customer's email. Briefly outline the required action and attach supporting documentation.</p></li>
+          <li><strong>One email per request only</strong></li>
+          <li><strong>Escalation</strong><p>If not resolved within 2 business days, forward the original email to <strong>Parmjit Parmer</strong> and copy <strong>Mamoon Ashraf</strong>.</p></li>
+        </ol>
+      </div>
+    </div>
+    <div>
+      <p style="margin:0 0 10px;color:var(--muted);font-size:14px">Common request types. Expand to read, or copy straight from the row.</p>
+      <details class="tpl" id="t-pay-not-applied" data-s="Payment made, not applied to account">
+        <summary><div class="tpl-title"><strong>Payment made, not applied to account</strong><span>Trace and apply a missing payment</span></div><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="tpl-body"><pre class="text">Hi Team,
+
+A payment was made by the customer below but has not yet been applied to their account. Could you help me trace and apply it?
+
+Customer Number: [insert]
+Payment Date: [insert]
+Payment Amount: [insert]
+Payment Method: [insert]
+
+Proof of payment is attached (customer remittance / direct deposit confirmation).
+
+Please let me know once this has been applied or if you need anything further.
+
+Thank you for your assistance.
+
+Best regards,</pre></div>
+      </details>
+      <details class="tpl" id="t-pay-wrong-acct" data-s="Payment applied to incorrect customer account">
+        <summary><div class="tpl-title"><strong>Payment applied to incorrect customer account</strong><span>Move a payment to the right account</span></div><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="tpl-body"><pre class="text">Hi Team,
+
+A payment appears to have been applied to the wrong customer account. Could you please move it to the correct account?
+
+Payment currently applied to: [incorrect customer number/name]
+Should be applied to: [correct customer number/name]
+Payment Date: [insert]
+Payment Amount: [insert]
+
+Proof of payment is attached. Please confirm once the correction has been made.
+
+Thank you for your assistance.
+
+Best regards,</pre></div>
+      </details>
+      <details class="tpl" id="t-pay-wrong-inv" data-s="Payment applied to correct customer, incorrect invoice">
+        <summary><div class="tpl-title"><strong>Payment applied to correct customer, incorrect invoice</strong><span>Move a payment to the right invoice</span></div><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+        <div class="tpl-body"><pre class="text">Hi Team,
+
+A payment was applied to the correct customer account but to the wrong invoice. Could you please move it to the correct invoice?
+
+Customer Number: [insert]
+Currently applied to invoice #: [insert]
+Should be applied to invoice #: [insert]
+Payment Date: [insert]
+Payment Amount: [insert]
+
+Supporting documentation is attached. Please confirm once the invoice has been corrected.
+
+Thank you for your assistance.
+
+Best regards,</pre></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- =================== TEMPLATES =================== -->
+<section class="page" id="templates" data-page="templates" data-name="Email Templates">
+  <div class="page-head">
+    <div><h2>Email Templates</h2><p>Ready-to-copy emails for cancellations, contract terms and common billing questions. Highlighted brackets are the parts to fill in.</p></div>
+    <div data-searchbox></div>
+  </div>
+
+  <div class="tpl-layout">
+    <nav class="toc" aria-label="Templates on this page">
+      <h5>Cancellation</h5>
+      <ul>
+        <li><a href="#templates:t-cancel-internal">Internal email</a></li>
+        <li><a href="#templates:t-cancel-customer">Customer-facing request</a></li>
+        <li><a href="#templates:t-cancel-receipt">Request receipt</a></li>
+      </ul>
+      <h5>Contract term</h5>
+      <ul>
+        <li><a href="#templates:t-term-out">Account not in term</a></li>
+        <li><a href="#templates:t-term-in">Account in term</a></li>
+      </ul>
+      <h5>Billing correspondence</h5>
+      <ul>
+        <li><a href="#templates:t-billed-error">Billed in error claim</a></li>
+        <li><a href="#templates:t-cancelled-billed">Cancelled, still billed</a></li>
+        <li><a href="#templates:t-outstanding">Outstanding invoice, cancelled</a></li>
+      </ul>
+      <h5>Elsewhere</h5>
+      <ul>
+        <li><a href="#billing:trace">Payment trace &amp; apply</a></li>
+        <li><a href="#announcements:go-green">Go Green subject line</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <div class="tpl-group" id="g-cancel">
+        <h3>Cancellation</h3>
+        <p>Internal hand-off to the cancellation team, plus the two customer emails.</p>
+
+        <details class="tpl" id="t-cancel-internal" data-s="Cancellation request — internal email template" open>
+          <summary><div class="tpl-title"><strong>Cancellation request: internal email</strong><span>Send to the cancellation team</span></div><span class="tag internal">Internal</span><button class="btn ghost" data-copy-from="pre">Copy body</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body">
+            <div class="tpl-meta"><span class="lbl">Send to</span><button class="chip email">apiwelcomesyou@apialarm.com</button></div>
+            <div class="line-copy"><span class="lbl">Subject</span><code>[Customer Number] · [Customer Name] · [System Number / Old Customer #] · [Group Code]</code><button class="btn" data-copy="[Customer Number] · [Customer Name] · [System Number / Old Customer #] · [Group Code]">Copy</button></div>
+            <pre class="text">Account Number: ____________
+Name: ____________
+Email: ____________
+Address: ____________
+Phone: ____________
+
+Reason for Cancellation: ____________</pre>
+          </div>
+        </details>
+
+        <details class="tpl" id="t-cancel-customer" data-s="Request for cancellation — customer-facing template">
+          <summary><div class="tpl-title"><strong>Request for cancellation: customer-facing</strong><span>Retention number + how to send a written request</span></div><span class="tag">Customer</span><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body">
+            <pre class="text">Hi [customer]
+
+Thank you for contacting API. We certainly do not want to see you go, and we'd love to find a solution that better suits your needs.
+
+For prompt assistance, you can reach our Retention Team at 1-833-745-5314, Monday to Friday between 9:00 AM and 5:00 PM EST.
+
+Alternatively, to send your written cancellation request, you may follow this steps:
+
+1. Send an email to our Cancellation Team at apiwelcomesyou@apialarm.com.
+2. In your email, include the following details:
+
+* Account Number:
+* Name on the Account:
+* Call-Back Number:
+* Email Address:
+* Home/Site Address:
+* Reason for Cancellation:
+
+Feel free to copy this subject line to your email: Cancellation Request - [account number] / [account holder name] / [system number] / [group code]
+
+Thank you for your patience and understanding.
+
+Warm regards,</pre>
+          </div>
+        </details>
+
+        <details class="tpl" id="t-cancel-receipt" data-s="Cancellation request receipt — template">
+          <summary><div class="tpl-title"><strong>Cancellation request receipt</strong><span>Confirm the request was forwarded to retention</span></div><span class="tag">Customer</span><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body"><pre class="text">Hello [customer],
+
+We're sorry to hear that you wish to cancel.
+
+Your cancellation request has been forwarded to our retention department, and a member of their team will be reaching out to assist you with the cancellation process.
+
+Please note that account cancellations are subject to a 30-day notice period.
+
+If you have any questions regarding the cancellation process, you can reach our Retention Team at 1-833-745-5314, Monday to Friday between 9:00 AM and 5:00 PM EST.
+
+Thank you for your patience and understanding.
+
+Warm regards,</pre></div>
+        </details>
+      </div>
+
+      <div class="tpl-group" id="g-term">
+        <h3>Contract term inquiries</h3>
+        <p>Pick the version that matches the account's term status in Sedona.</p>
+
+        <details class="tpl" id="t-term-out" data-s="Contract term inquiry — account not in term (out of contract)">
+          <summary><div class="tpl-title"><strong>Contract term inquiry: account not in term</strong><span>Out of contract, no remaining commitment</span></div><span class="tag">Customer</span><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body"><pre class="text">Hello [customer],
+
+Upon checking your account details, I can confirm that your account at [site address] is currently out of contract. This means that there are no active contractual commitments remaining on the accounts at this time.
+
+If you would like to review your available options or discuss any changes, upgrades, or new contract terms, please let us know and we would be happy to assist you further.
+
+Please feel free to reach out to our Loyalty Team at 1-800-897-1039 ext. 2012, Monday to Friday between 9:00 AM and 5:00 PM EST, if you have any questions or require any additional information.
+
+Thank you for your continued partnership.
+
+Best regards,</pre></div>
+        </details>
+
+        <details class="tpl" id="t-term-in" data-s="Contract term inquiry — account in term (BOC buyout)">
+          <summary><div class="tpl-title"><strong>Contract term inquiry: account in term</strong><span>Within term; early termination billed as BOC</span></div><span class="tag">Customer</span><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body"><pre class="text">Hello [customer],
+
+Thank you for contacting API.
+
+Please note that your original agreement was established with Bell and they did not provide copies of the original contract but supplied us with contractual information such as start date, length of contract, and billing information
+
+Based on this available information, I can confirm that your account at [site address]  is within term, which runs until [end term date]. Early termination is subject to be billed BOC (Buyout Contract), together with your outstanding balance prior to your early cancellation request.
+
+If you would like to review your available options or discuss any changes, upgrades, or new contract terms, please let us know and we would be happy to assist you further.
+
+Please feel free to reach out to our Loyalty Team at 1-800-897-1039 ext. 2012, Monday to Friday between 9:00 AM and 5:00 PM EST, if you have any questions or require any additional information.
+
+Thank you for your continued partnership.
+
+Best regards,</pre></div>
+        </details>
+        <div class="tpl-meta" style="margin-top:4px"><span class="lbl">Loyalty Team</span><button class="chip">1-800-897-1039</button><button class="chip" data-copy="2012">ext. 2012</button></div>
+      </div>
+
+      <div class="tpl-group" id="g-billing">
+        <h3>Billing correspondence</h3>
+        <p>Responses for the most common billing and ownership questions.</p>
+
+        <details class="tpl" id="t-billed-error" data-s="Claiming they were billed in error (no new agreement signed) — Bell acquisition">
+          <summary><div class="tpl-title"><strong>Claiming they were billed in error</strong><span>No new agreement signed; explains the Bell acquisition</span></div><span class="tag">Customer</span><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body"><pre class="text">Hi [customer name],
+
+Thank you for reaching out, and I understand the concern — receiving unexpected billing without a clear explanation is confusing, and I'm happy to clarify.
+
+You have not been billed in error. Your account with us stems from a business transition rather than a new agreement you would have signed with a.p.i. Alarm directly. Effective October 1, 2025, a.p.i. Alarm Inc. acquired Bell's Security &amp; Automation business (formerly AlarmForce), and all active Bell Security and Automation accounts — including yours — were transferred to us as part of that acquisition. This transition was announced publicly by Bell, and you can review the official details here: https://business.bell.ca/Support/small-business/security-automation/bell_business_security_and_automation_update
+
+As part of this transition, no new contract or signature was required from you. Your existing service term simply carried over from Bell to a.p.i. Alarm on the same conditions, which is why our records show your account without a separately signed a.p.i. Alarm agreement.
+
+I've attached our welcome letter along with a copy of the contract term information from your Bell file for your review.
+
+Please don't hesitate to reach out if you have further questions or would like to go over your account details together — I'm happy to help.
+
+Warm regards,</pre>
+          <div class="tpl-meta"><span class="lbl">Attach</span><a href="#training:f-letter">a.p.i. Alarm Customer Letter (Oct 1)</a></div></div>
+        </details>
+
+        <details class="tpl" id="t-cancelled-billed" data-s="Cancelled account — asking why still being billed (final invoice)">
+          <summary><div class="tpl-title"><strong>Cancelled account: asking why still billed</strong><span>Final invoice covers remaining contract months</span></div><span class="tag">Customer</span><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body"><pre class="text">Hi [Customer Name],
+
+Thank you so much for reaching out, and I completely understand wanting some clarity on this balance — I'm glad to walk you through it.
+
+The amount on your account reflects your final invoice, which covers the remaining months of the contract term that was originally carried over from Bell. The payment of $xx you kindly made last xx was applied to the outstanding balance while your account was still active, prior to your cancellation request. The final invoice you'll find attached reflects the charges for the remaining contracted months that followed.
+
+I've attached a copy of the final invoice for your records, and I want to make sure everything makes sense on your end.
+
+If anything is unclear or you'd like to go over the details together, please don't hesitate to reach out — I'm happy to help in any way I can.
+
+Warm regards,</pre></div>
+        </details>
+
+        <details class="tpl" id="t-outstanding" data-s="Outstanding invoice from cancelled account (not final invoice)">
+          <summary><div class="tpl-title"><strong>Outstanding invoice from cancelled account</strong><span>Not a final invoice; charges predate cancellation</span></div><span class="tag">Customer</span><button class="btn ghost" data-copy-from="pre">Copy</button><svg class="chev"><use href="#i-chev"/></svg></summary>
+          <div class="tpl-body"><pre class="text">Hi [Customer Name],
+
+Thank you for reaching out, and I sincerely apologize for the frustration this has caused. That's not the experience we want for you.
+
+I can confirm your account (account number) has been cancelled since [month and year]. The remaining balance on file reflects charges from prior to your cancellation request, not any charges since.
+
+If you need further clarification on your processed termination of account, you can reach our retention team at 1-833-745-5314, Monday to Friday between 9:00 AM and 5:00 PM EST.
+
+Thank you for your patience, and understanding. We appreciate you bringing this to our attention.
+
+Best regards,</pre></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== ANNOUNCEMENTS =================== -->
+<section class="page" id="announcements" data-page="announcements" data-name="Announcements">
+  <div class="page-head">
+    <div><h2>Announcements &amp; Alerts</h2><p>Recent process changes, promos, security notices and internal memos worth knowing.</p></div>
+    <div data-searchbox></div>
+  </div>
+
+  <div class="stop" id="fluent" data-s="Fluent is no longer affiliated with a.p.i. Alarm Inc." style="margin-bottom:18px"><svg class="ic"><use href="#i-alert"/></svg><div><strong>Fluent is no longer affiliated with a.p.i. Alarm Inc.</strong> a.p.i. Alarm now manages all aspects of formerly Fluent accounts. Customers require no action. If anyone asks a customer to sign a new contract or change anything, they are doing so fraudulently. Single point of contact for all service, support, upgrades and billing: <button class="chip">1-833-745-5632</button></div></div>
+
+  <div class="grid-3">
+    <div class="panel" id="jpm" data-s="Switch: TDMS to JPM Chase (Forte) payment processing">
+      <div class="panel-head"><svg class="ic"><use href="#i-swap"/></svg><h4>Switch: TDMS to JPM Chase</h4></div>
+      <div class="panel-body"><p class="who" style="margin:0 0 6px">Payment processing · Jun 19, 2026</p><p>All debit and credit card transactions now route via Forte (JPM Chase) into our bank account, no longer from TDMS. Collections team: try debit card transactions to confirm this works.</p></div>
+    </div>
+    <div class="panel" id="invoice-pdf" data-s="Customer invoice PDFs — link only">
+      <div class="panel-head"><svg class="ic"><use href="#i-doc"/></svg><h4>Customer invoice PDFs: link only</h4></div>
+      <div class="panel-body"><p class="who" style="margin:0 0 6px">Invoicing · Jun 11, 2026</p><p>Effective immediately, retail/non-PAP customer invoice emails include a direct download link, no attachments. Customers do NOT need to sign in. Master account (wholesale) customers still receive PDF + Excel attachments.</p></div>
+    </div>
+    <div class="panel" id="two-way-text" data-s="2-way text notifications (647) 360-7546">
+      <div class="panel-head"><svg class="ic"><use href="#i-bell"/></svg><h4>2-way text notifications</h4></div>
+      <div class="panel-body"><p class="who" style="margin:0 0 6px">New feature</p><p>Customers with a valid mobile number now receive real-time text alerts from monitoring and can cancel or dispatch alarms by text. If there's no response, standard procedures apply.</p><p style="margin-bottom:0">Texts come from <button class="chip">(647) 360-7546</button></p></div>
+    </div>
+  </div>
+
+  <div class="panel lead" id="go-green" style="margin-top:18px" data-s="Go Green email invoicing promo — $10.00 off">
+    <div class="panel-head"><svg class="ic"><use href="#i-leaf"/></svg><h4>Go Green email invoicing promo</h4></div>
+    <div class="panel-body" style="display:grid;gap:14px">
+      <div class="note"><svg class="ic"><use href="#i-info"/></svg><div><strong>Let's grow greener together.</strong> Customers switching to email invoicing get <strong>$10.00 off</strong> their next invoice. To switch, the customer emails <strong>customercare@apialarm.com</strong> with their account number or full address.</div></div>
+      <p style="margin:0">If we get a call about this, either transfer to Customer Service <button class="chip">1-833-745-5153</button> or escalate internally by emailing credit at <button class="chip email">apireceivables@apialarm.com</button></p>
+      <p style="margin:0;color:var(--muted);font-size:14px">Use the standard subject line (Sedona stages group code), with <strong>GO GREEN 10.00 OFF</strong> as the header before the Sedona account.</p>
+      <div class="line-copy"><span class="lbl">Subject</span><code>GO GREEN 10.00 OFF - [Account Number] / [Name on the Account] / [Old Customer #] / [Group Code]</code><button class="btn" data-copy="GO GREEN 10.00 OFF - [Account Number] / [Name on the Account] / [Old Customer #] / [Group Code]">Copy</button></div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:18px">
+    <div class="panel" id="sec-links" data-s="Security alert — link scams">
+      <div class="panel-head"><svg class="ic" style="color:var(--stop)"><use href="#i-shield"/></svg><h4>Security alert: link scams</h4></div>
+      <div class="panel-body"><p><strong>Anything with a link is the scam team.</strong></p><p style="color:var(--muted)">Unless it's the client who has been communicating with you for days, or you knew what the email was for.</p></div>
+    </div>
+    <div class="panel" id="sec-bonus" data-s="Security alert — bonus / pay phishing">
+      <div class="panel-head"><svg class="ic" style="color:var(--stop)"><use href="#i-shield"/></svg><h4>Security alert: bonus / pay phishing</h4></div>
+      <div class="panel-body"><p>If you get an email about a bonus or pay increase, <strong>mark it as spam</strong>. Do not open it.</p></div>
+      <div class="panel-foot">Mamoon Ashraf, 10:49 AM</div>
+    </div>
+  </div>
+
+  <div class="panel" id="guard-response" style="margin-top:18px" data-s="Guard response fee adjustment notice ($1.50) — reference document download">
+    <div class="panel-head"><svg class="ic"><use href="#i-doc"/></svg><h4>Reference: guard response fee adjustment notice</h4></div>
+    <div class="panel-body guard-grid">
+      <p class="who" style="margin:0;grid-column:1/-1">Filed for reference: document dated May 21, 2026 (v3), sent to a former BSH customer test tranche.</p>
+      <pre class="text">Subject: IMPORTANT: Service Announcement
+
+You are currently enrolled in our private, on-demand Guard Response Service. Your monthly fee includes 2 live guard responses in each calendar year.
+
+Starting in the next billing cycle, you will notice a modest adjustment to your monthly charges — an additional $1.50, covering mobile guard response, eyewitness threat verification, and false alarm verification.
+
+If you would like to remove the guard response service and avoid the $1.50 increase, or if you have any questions, you can reach dedicated customer care Weekdays 9am–5pm EST at 1-833-745-5632 (ask about the "Guard Service Adjustment").</pre>
+      <div style="display:grid;gap:12px;align-content:start">
+        <a class="file" data-file="Guard Response - Fee Adjustment (with removal option) - V3.docx" data-s="Guard Response Fee Adjustment V3 docx download">
+          <span class="ext"></span>
+          <span class="f-text"><strong>Guard Response: Fee Adjustment (with removal option) V3</strong><span>Download this for review</span></span>
+          <svg class="ic"><use href="#i-down"/></svg>
+        </a>
+        <div class="tpl-meta"><span class="lbl">Fee removal line</span><button class="chip">1-833-745-5632</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== TRAINING =================== -->
+<section class="page" id="training" data-page="training" data-name="Training & Resources">
+  <div class="page-head">
+    <div><h2>Training &amp; Resources</h2><p>Onboarding files, reference documents, training walkthroughs and software installers. Click any item to download.</p></div>
+    <div data-searchbox></div>
+  </div>
+
+  <h3 class="section-title" style="margin-top:0">Files</h3>
+  <div class="file-list">
+    <a class="file" id="f-letter" data-file="api_alarm_customer_letter_Oct 1 2025 R.pdf" data-s="a.p.i. Alarm Customer Letter — October 1"><span class="ext"></span><span class="f-text"><strong>a.p.i. Alarm Customer Letter — October 1</strong><span>Official transition letter</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="Bell_Security_and_Automation_Terms.pdf" data-s="Bell Security & Automation — Terms of Service"><span class="ext"></span><span class="f-text"><strong>Bell Security &amp; Automation — Terms of Service</strong><span>Legacy account reference</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="Bell_Smart_Home_Terms_ON_EN.pdf" data-s="Bell Smart Home — Terms of Service"><span class="ext"></span><span class="f-text"><strong>Bell Smart Home — Terms of Service</strong><span>Legacy account reference</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+  </div>
+
+  <h3 class="section-title">Resources</h3>
+  <div class="file-list">
+    <a class="file" data-file="a.p.i. ALARM PAYMENT INFORMATION.pdf" data-s="a.p.i. Alarm Payment Information"><span class="ext"></span><span class="f-text"><strong>a.p.i. Alarm Payment Information</strong><span>Payment methods &amp; processing reference</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="PAP Form API ALARM.pdf" data-s="PAP Form — pre-authorized payment"><span class="ext"></span><span class="f-text"><strong>PAP Form</strong><span>Pre-authorized payment form</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="FINAL DEMAND LETTER.doc" data-s="Final Demand Letter — collections escalation"><span class="ext"></span><span class="f-text"><strong>Final Demand Letter</strong><span>Collections escalation template</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+  </div>
+
+  <h3 class="section-title">Training modules</h3>
+  <div class="file-list">
+    <a class="file" data-file="One-X Communicator Install-VH.pdf" data-s="Installing Avaya One-X Communicator"><span class="ext"></span><span class="f-text"><strong>Installing Avaya One-X Communicator</strong><span>Softphone setup walkthrough</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="VPN installation guide-VH1.pdf" data-s="VPN Installation guide"><span class="ext"></span><span class="f-text"><strong>VPN Installation</strong><span>Remote access setup walkthrough</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="SEDONA BASIC NAVIGATION.pdf" data-s="Sedona Basic Navigation"><span class="ext"></span><span class="f-text"><strong>Sedona Basic Navigation</strong><span>Core system walkthrough</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="Payment Processing Training Module final draft.pdf" data-s="Payment Processing — Sedona how-to"><span class="ext"></span><span class="f-text"><strong>Payment Processing</strong><span>Sedona how-to</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="UPDATE CUSTOMER CONTACT.pdf" data-s="Updating Customer's Contact Information — Sedona how-to"><span class="ext"></span><span class="f-text"><strong>Updating Customer's Contact Information</strong><span>Sedona how-to</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="SEDONA WEB PORTAL.pdf" data-s="Creating Sedona Web Portal Credentials for Customer"><span class="ext"></span><span class="f-text"><strong>Creating Sedona Web Portal Credentials for Customer</strong><span>Sedona how-to</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="INVOICE AND STATEMENT.pdf" data-s="Downloading Invoice and Statement for Customer"><span class="ext"></span><span class="f-text"><strong>Downloading Invoice and Statement for Customer</strong><span>Sedona how-to</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+  </div>
+
+  <h3 class="section-title">Software tools</h3>
+  <div class="file-list">
+    <a class="file" data-file="Avaya one-X Communicator Suite.exe" data-url="https://drive.google.com/file/d/1HyNyPLW5CSAk2aCighhexF7cpDNy2u81/view?usp=drive_link" data-s="Avaya softphone installer"><span class="ext"></span><span class="f-text"><strong>Avaya</strong><span>Softphone installer</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+    <a class="file" data-file="GlobalProtect64-6.3.2.msi" data-url="https://drive.google.com/file/d/1poBeGjoCToQLOQwIPt_c91n3_ZoHJZwR/view?usp=drive_link" data-s="Global Protect VPN client installer"><span class="ext"></span><span class="f-text"><strong>Global Protect VPN</strong><span>VPN client installer</span></span><svg class="ic"><use href="#i-down"/></svg></a>
+  </div>
+</section>
+
+</main>
+
+<footer><div><span>Last updated September 2026. Prepared by VH Glenn 2026</span><span>Press <strong>/</strong> to search</span></div></footer>
+<div class="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  const PAGES = [...document.querySelectorAll('.page')].map(p => p.id);
+  const toast = document.querySelector('.toast');
+  let toastTimer;
+  function showToast(msg){
+    toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
+  }
+
+  /* ---------- Clipboard ---------- */
+  async function copyText(t){
+    try { await navigator.clipboard.writeText(t); return true; }
+    catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = t; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.opacity='0';
+      document.body.appendChild(ta); ta.select();
+      let ok = false; try { ok = document.execCommand('copy'); } catch(_){}
+      ta.remove(); return ok;
+    }
+  }
+  const icon = id => `<svg class="ic" aria-hidden="true"><use href="#${id}"/></svg>`;
+
+  document.querySelectorAll('.chip').forEach(c => {
+    if(!c.dataset.copy) c.dataset.copy = c.textContent.trim();
+    c.innerHTML = icon('i-copy') + '<span>' + c.innerHTML + '</span>';
+    c.title = 'Copy ' + c.dataset.copy;
+  });
+
+  document.addEventListener('click', async e => {
+    const b = e.target.closest('.chip, [data-copy], [data-copy-from]');
+    if(!b) return;
+    e.preventDefault(); e.stopPropagation();
+    let text = b.dataset.copy;
+    if(b.dataset.copyFrom){
+      const host = b.closest('details, .panel, .tpl');
+      const pre = host && host.querySelector('pre');
+      text = pre ? pre.textContent : '';
+    }
+    if(!text) return;
+    const ok = await copyText(text);
+    const short = text.length > 46 ? 'Copied ' + (b.closest('details')?.querySelector('.tpl-title strong')?.textContent || 'text') : 'Copied ' + text;
+    showToast(ok ? short : 'Copy blocked by the browser. Select and copy manually.');
+    if(ok){
+      b.classList.add('done');
+      const use = b.querySelector('use'); if(use) use.setAttribute('href','#i-check');
+      setTimeout(() => { b.classList.remove('done'); if(use) use.setAttribute('href','#i-copy'); }, 1300);
+    }
+  }, true);
+
+  /* ---------- Placeholder highlight in templates ---------- */
+  const esc = s => s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+  document.querySelectorAll('pre.text').forEach(p => {
+    p.innerHTML = esc(p.textContent).replace(/\[[^\]\n]+\]|_{6,}|\$xx|last xx|\(account number\)/g, m => `<span class="ph">${m}</span>`);
+  });
+
+  /* ---------- Download links ---------- */
+  document.querySelectorAll('a.file').forEach(a => {
+    const name = a.dataset.file;
+    if(a.dataset.url){
+      a.href = a.dataset.url; a.target = '_blank'; a.rel = 'noopener';
+    } else {
+      a.href = 'files/' + encodeURIComponent(name);
+      a.setAttribute('download', name);
+    }
+    const ext = name.split('.').pop().toLowerCase();
+    const extEl = a.querySelector('.ext'); extEl.textContent = ext.toUpperCase(); extEl.classList.add(ext);
+    a.title = 'Download ' + name;
+  });
+
+  /* ---------- Routing ---------- */
+  const tabs = [...document.querySelectorAll('.tabs a')];
+  function route(){
+    const raw = decodeURIComponent(location.hash.slice(1));
+    let [page, anchor] = raw.split(':');
+    if(!PAGES.includes(page)) page = 'home';
+    document.querySelectorAll('.page').forEach(p => p.classList.toggle('active', p.id === page));
+    tabs.forEach(t => t.getAttribute('href') === '#' + page ? t.setAttribute('aria-current','page') : t.removeAttribute('aria-current'));
+    const active = tabs.find(t => t.hasAttribute('aria-current'));
+    if(active) active.scrollIntoView({block:'nearest', inline:'nearest'});
+    document.title = (document.getElementById(page).dataset.name) + ' · Team Mitch';
+    closeAllResults();
+    if(anchor) reveal(anchor); else window.scrollTo(0,0);
+  }
+  function reveal(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    const d = el.matches('details') ? el : el.closest('details');
+    if(d) d.open = true;
+    requestAnimationFrame(() => {
+      el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+      el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+    });
+  }
+  window.addEventListener('hashchange', route);
+
+  /* ---------- Search ---------- */
+  let n = 0;
+  const norm = s => s.toLowerCase().replace(/\s+/g,' ').trim();
+  const INDEX = [...document.querySelectorAll('[data-s]')].map(el => {
+    if(!el.id) el.id = 'item-' + (++n);
+    const page = el.closest('.page');
+    const parts = []; const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    while(w.nextNode()) parts.push(w.currentNode.nodeValue);
+    const raw = parts.join(' ').replace(/\s+/g,' ').trim();
+    return { el, id: el.id, page: page.id, pageName: page.dataset.name, title: el.dataset.s, raw, hay: norm(el.dataset.s + ' ' + raw + ' ' + (el.dataset.file || '')) };
+  });
+
+  function search(q){
+    const terms = norm(q).split(' ').filter(Boolean);
+    if(!terms.length) return [];
+    const digits = q.replace(/\D/g,'');
+    return INDEX.map(it => {
+      let ok = terms.every(t => it.hay.includes(t));
+      if(!ok && digits.length >= 3 && it.hay.replace(/\D/g,'').includes(digits)) ok = true;
+      if(!ok) return null;
+      const t = norm(it.title);
+      let score = terms.reduce((s,x) => s + (t.includes(x) ? 5 : 1), 0);
+      if(t.startsWith(terms[0])) score += 3;
+      score -= it.raw.length / 4000;
+      return {...it, score};
+    }).filter(Boolean).filter((r,_,all) => !all.some(o => o !== r && r.el.contains(o.el)))
+      .sort((a,b) => b.score - a.score).slice(0, 10);
+  }
+  function snippet(raw, q){
+    const terms = norm(q).split(' ').filter(Boolean);
+    const low = raw.toLowerCase();
+    let at = -1; for(const t of terms){ at = low.indexOf(t); if(at > -1) break; }
+    let s = at > 50 ? '…' + raw.slice(at - 40, at + 120) : raw.slice(0, 160);
+    s = esc(s);
+    terms.forEach(t => { if(t.length > 1) s = s.replace(new RegExp('(' + t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')','gi'), '<mark>$1</mark>'); });
+    return s;
+  }
+
+  const boxes = [];
+  document.querySelectorAll('[data-searchbox]').forEach(holder => {
+    const ph = holder.dataset.placeholder || 'Search the whole site…';
+    holder.innerHTML = `<div class="search" role="search">${icon('i-search')}<label class="sr-only">Search</label><input type="search" placeholder="${ph}" autocomplete="off" spellcheck="false" aria-label="Search"><kbd>/</kbd><ul class="results" role="listbox"></ul></div>`;
+    const input = holder.querySelector('input'), list = holder.querySelector('.results'), kbd = holder.querySelector('kbd');
+    let sel = -1;
+    const render = () => {
+      const q = input.value; kbd.style.display = q ? 'none' : '';
+      if(!q.trim()){ list.classList.remove('open'); list.innerHTML=''; return; }
+      const res = search(q); sel = res.length ? 0 : -1;
+      list.innerHTML = res.length ? res.map((r,i) => `<li><a href="#${r.page}:${r.id}" class="${i===0?'sel':''}"><div class="r-top"><span class="r-title">${esc(r.title)}</span><span class="r-page">${esc(r.pageName)}</span></div><div class="r-snip">${snippet(r.raw, q)}</div></a></li>`).join('')
+        : `<li class="empty">No matches for “${esc(q)}”. Try a name, department, extension or file name.</li>`;
+      list.classList.add('open');
+    };
+    input.addEventListener('input', render);
+    input.addEventListener('focus', () => { if(input.value.trim()) render(); });
+    input.addEventListener('keydown', e => {
+      const links = [...list.querySelectorAll('a')];
+      if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+        if(!links.length) return; e.preventDefault();
+        sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length;
+        links.forEach((l,i) => l.classList.toggle('sel', i === sel)); links[sel].scrollIntoView({block:'nearest'});
+      } else if(e.key === 'Enter' && links[sel]){ e.preventDefault(); go(links[sel].getAttribute('href')); }
+      else if(e.key === 'Escape'){ input.value=''; render(); input.blur(); }
+    });
+    list.addEventListener('click', e => { const a = e.target.closest('a'); if(a){ e.preventDefault(); go(a.getAttribute('href')); } });
+    boxes.push({input, list});
+  });
+  function go(href){
+    boxes.forEach(b => { b.input.value=''; b.input.dispatchEvent(new Event('input')); b.input.blur(); });
+    if(location.hash === href) route(); else location.hash = href;
+  }
+  function closeAllResults(){ boxes.forEach(b => b.list.classList.remove('open')); }
+  document.addEventListener('click', e => { if(!e.target.closest('.search')) closeAllResults(); });
+  document.addEventListener('keydown', e => {
+    if(e.key === '/' && !/input|textarea/i.test(document.activeElement.tagName)){
+      const box = document.querySelector('.page.active .search input');
+      if(box){ e.preventDefault(); box.focus(); }
+    }
+  });
+
+  /* in-page anchor links like #templates:t-term-in */
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if(a && !a.closest('.results') && a.getAttribute('href') === location.hash){ e.preventDefault(); route(); }
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
