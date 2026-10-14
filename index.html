@@ -278,10 +278,10 @@ body.locked{min-height:100vh}
     <div class="gate-card" id="gate-card">
       <span class="gate-ic" id="gate-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></span>
       <h2 class="gate-h" id="gate-h">Staff only</h2>
-      <p class="gate-p" id="gate-p">Enter your 4-digit extension to open the team resources.</p>
+      <p class="gate-p" id="gate-p">Enter your 4-digit Avaya Extension to open the team resources.</p>
       <div class="gate-clock" id="gate-clock" hidden><span>Try again in</span><strong id="gate-time">0:00</strong></div>
       <form id="gate-form" autocomplete="off" novalidate>
-        <label for="gate-code" class="sr-only">Your 4-digit extension</label>
+        <label for="gate-code" class="sr-only">Your 4-digit Avaya extension</label>
         <input class="gate-code" id="gate-code" type="password" inputmode="numeric" maxlength="4" placeholder="4 digits" autocomplete="off" spellcheck="false">
         <button class="gate-go" id="gate-go" type="submit">Enter site</button>
       </form>
@@ -527,7 +527,7 @@ window.initSite = function(){
     card.classList.toggle('is-locked', on);
     icon.innerHTML = on ? CLOCK_ICON : LOCK_ICON;
     title.textContent = on ? 'Please wait' : 'Staff only';
-    sub.textContent = on ? 'Entry is paused after too many wrong extensions.' : 'Enter your 4-digit extension to open the team resources.';
+    sub.textContent = on ? 'Entry is paused after too many wrong extensions.' : 'Enter your 4-digit Avaya Extension to open the team resources.';
   }
   function renderLock(){
     var left = st.u - Date.now();
@@ -604,7 +604,7 @@ window.initSite = function(){
     normalize();
     if (renderLock()) return;
     var v = input.value;
-    if (v.length !== 4) { showMsg('Enter all 4 digits of your extension.', false); input.focus(); return; }
+    if (v.length !== 4) { showMsg('Enter all 4 digits of your Avaya Extension.', false); input.focus(); return; }
     busy = true; btn.disabled = true; btn.textContent = 'Checking\u2026';
     tryCode(v).catch(function(){ return null; }).then(function(hit){
       busy = false; btn.disabled = false; btn.textContent = 'Enter site';
